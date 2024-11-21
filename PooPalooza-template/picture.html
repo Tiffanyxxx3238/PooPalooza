@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拍照功能</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!--picture CSS-->
+  <style>
+    .camera-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    #video {
+        width: 100%;
+        max-width: 640px;
+        margin-bottom: 20px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+    }
+
+    #canvas {
+        display: none;
+    }
+
+    #photo {
+        width: 100%;
+        max-width: 640px;
+        margin-top: 20px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        display: none;
+    }
+
+    .button-container {
+        margin: 20px 0;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+
+    #retake {
+        background-color: #f44336;
+        display: none;
+    }
+
+    #retake:hover {
+        background-color: #da190b;
+    }
+    </style>
+  <!-- =======================================================
+  * Template Name: QuickStart
+  * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="images/icon.png" alt="">
+        <h1 class="sitename">PooPalooza</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero" class="active">主頁</a></li>
+          <li class="dropdown"><a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#map">廁所地圖</a></li>
+              <li><a href="#education">衛教</a></li>
+              <li><a href="#aboutus">關於我們</a></li>
+              <!--<li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>-->
+                <ul>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="#login">登入</a>
+      <a class="btn-getstarted" href="#register">註冊</a>
+
+    </div>
+  </header>
+  <main class="main">
+    <section id="hero" class="hero d-flex align-items-center">
+        <div class="container">
+            <div class="login-container">
+                <div class="row g-0">
+                    <div class="container">
+                      <div class="camera-container">
+                        <video id="video" autoplay playsinline></video>
+                        <canvas id="canvas"></canvas>
+                        <img id="photo" alt="拍攝的照片">
+                        
+                        <div class="button-container">
+                            <button id="startCamera">開啟相機</button>
+                            <button id="capture" disabled>拍照</button>
+                            <button id="retake">重新拍攝</button>
+                            <button id="download" style="display: none;">下載照片</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+  
+
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const photo = document.getElementById('photo');
+    const startButton = document.getElementById('startCamera');
+    const captureButton = document.getElementById('capture');
+    const retakeButton = document.getElementById('retake');
+    const downloadButton = document.getElementById('download');
+    const context = canvas.getContext('2d');
+    let stream = null;
+
+    // 開啟相機
+    startButton.addEventListener('click', async () => {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: 'environment',  // 預設使用後置相機
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                } 
+            });
+            video.srcObject = stream;
+            startButton.disabled = true;
+            captureButton.disabled = false;
+        } catch (err) {
+            console.error('無法使用相機:', err);
+            alert('無法使用相機，請確認相機權限已開啟');
+        }
+    });
+
+    // 拍照
+    captureButton.addEventListener('click', () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // 顯示拍攝的照片
+        photo.src = canvas.toDataURL('image/png');
+        photo.style.display = 'block';
+        
+        // 隱藏視訊預覽，顯示相關按鈕
+        video.style.display = 'none';
+        captureButton.style.display = 'none';
+        retakeButton.style.display = 'inline-block';
+        downloadButton.style.display = 'inline-block';
+    });
+
+    // 重新拍攝
+    retakeButton.addEventListener('click', () => {
+        // 顯示視訊預覽，隱藏照片
+        video.style.display = 'block';
+        photo.style.display = 'none';
+        
+        // 重設按鈕狀態
+        captureButton.style.display = 'inline-block';
+        retakeButton.style.display = 'none';
+        downloadButton.style.display = 'none';
+    });
+
+    // 下載照片
+    downloadButton.addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = 'photo.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+
+    // 當頁面關閉時停止攝影機
+    window.addEventListener('beforeunload', () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+    });
+</script>
+
+    </section><!-- /Hero Section -->
+  
+      <!-- Features Details Section -->
+      <section id="features-details" class="features-details section">
+  
+       
+    </section>
+  
+    </footer>
+  
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+    <!-- Preloader -->
+    <div id="preloader"></div>
+  
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+  
+  </body>
+  
+  </html>
