@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <title>Card Design</title>
+  <style>
+    /* 全局樣式 */
+    body {
+      background-color: #353B3F;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* 卡片背景字 */
+    span.s1 {
+      position: absolute;
+      top: 0;
+      font-size: 15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #3C4447;
+    }
+
+    span.s2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #3C4447;
+    }
+
+    /* 卡片樣式 */
+    .card {
+      position: relative;
+      width: 900px;
+      height: 450px;
+      margin: 200px auto;
+      background-color: #FFF;
+      box-shadow: 10px 10px 93px rgba(0, 0, 0, 0.75);
+    }
+
+    .card .thumbnail {
+      float: left;
+      position: relative;
+      left: 30px;
+      top: -30px;
+      width: 530px;
+      height: 320px;
+      overflow: hidden;
+      box-shadow: 10px 10px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .card .thumbnail img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: auto;
+    }
+
+    .card .right {
+      margin-left: 590px;
+      margin-right: 20px;
+    }
+
+    .card .right h1 {
+      padding-top: 15px;
+      font-size: 1.3rem;
+      color: #4B4B4B;
+    }
+
+    .card .right .author {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      background-color: #9ECAFF;
+      border-radius: 20px;
+      width: 110px;
+      height: 30px;
+    }
+
+    .card .right .author img {
+      margin: 5px 10px;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+    }
+
+    .card .right .author h2 {
+      font-size: 0.8rem;
+      color: #FFF;
+      margin-right: 6px;
+    }
+
+    .card .right .separator {
+      margin-top: 10px;
+      border: 1px solid #C3C3C3;
+    }
+
+    .card .right p {
+      padding-top: 10px;
+      font-size: 0.95rem;
+      color: #4B4B4B;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    /* 日期 */
+    .card h5 {
+      position: absolute;
+      left: 30px;
+      bottom: -120px;
+      font-size: 6rem;
+      color: #C3C3C3;
+    }
+
+    .card h6 {
+      position: absolute;
+      left: 30px;
+      bottom: -55px;
+      font-size: 2rem;
+      color: #C3C3C3;
+    }
+
+    /* 按鈕 */
+    .card ul {
+      margin-left: 250px;
+      display: flex;
+      list-style: none;
+      padding: 0;
+    }
+
+    .card ul li {
+      padding-right: 40px;
+      color: #7B7B7B;
+    }
+
+    .card .fab {
+      position: absolute;
+      right: 50px;
+      bottom: -40px;
+      width: 80px;
+      height: 80px;
+      background-color: #1875D0;
+      border-radius: 50%;
+      color: #FFF;
+      text-align: center;
+      padding-top: 18px;
+      box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.75);
+    }
+  </style>
+</head>
+<body>
+  <span class="s1">Blog</span>
+  <span class="s2">Card</span>
+  <div class="card">
+    <div class="thumbnail">
+      <img class="left" src="https://cdn2.hubspot.net/hubfs/322787/Mychefcom/images/BLOG/Header-Blog/photo-culinaire-pexels.jpg" alt="Thumbnail">
+    </div>
+    <div class="right">
+      <h1>Why You Need More Magnesium in Your Daily Diet</h1>
+      <div class="author">
+        <img src="https://randomuser.me/api/portraits/men/95.jpg" alt="Author">
+        <h2>Igor MARTY</h2>
+      </div>
+      <div class="separator"></div>
+      <p>
+        Magnesium is one of the six essential macro-minerals required by the body for energy production and protein synthesis. It contributes to bone development and is essential for DNA and RNA synthesis. A new report in the *British Journal of Cancer* gives you another reason to add more magnesium to your diet...
+      </p>
+    </div>
+    <h5>12</h5>
+    <h6>JANUARY</h6>
+    <ul>
+      <li><i class="fa fa-eye fa-2x"></i></li>
+      <li><i class="fa fa-heart-o fa-2x"></i></li>
+      <li><i class="fa fa-envelope-o fa-2x"></i></li>
+      <li><i class="fa fa-share-alt fa-2x"></i></li>
+    </ul>
+    <div class="fab">
+      <i class="fa fa-arrow-down fa-3x"></i>
+    </div>
+  </div>
+</body>
+</html>

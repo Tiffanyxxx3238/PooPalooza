@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>文章</title>
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* General Reset */
+    body {
+      background-color: #a2a7b8;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h5, h6, p, ul, li {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* Card Component */
+    .card {
+        position: relative;
+      max-width: 90%;
+      width: 900px;
+      margin: 200px auto 50px;
+      background-color: #ececec;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      overflow: visible; /* 讓影片超出卡片範圍 */
+    }
+
+    .thumbnail {
+        position: relative;
+      flex: 1 1 50%;
+      max-width: 50%;
+      height: 320px;
+      overflow: visible; /* 允許超出顯示 */
+}
+
+.thumbnail iframe {
+    position: absolute;
+      top: -50px;  /* 使 iframe 超出卡片上方，這裡調整了更大的值 */
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* 保持與圖片的陰影效果 */
+      z-index: 2;  /* 確保 iframe 高於其他元素 */
+}
+
+    .thumbnail img {
+    position: absolute;
+    top: -50px; /* 向上移動 */
+    left: 50%; /* 水平置中 */
+    transform: translateX(-50%);
+    width: 110%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* 圖片陰影效果 */
+    }
+
+
+        .card .right {
+        flex: 1 1 50%;
+        max-width: 50%;
+        padding: 30px;
+        }
+
+        .card .right h1 {
+        font-size: 1.5rem;
+        color: #4B4B4B;
+        margin-bottom: 10px;
+        }
+
+        .card .right .author {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        background-color: #8c95a3;
+        border-radius: 20px;
+        padding: 5px 10px;
+        width: fit-content;
+        }
+
+        .card .right .author img {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        }
+
+        .card .right .author h2 {
+        font-size: 1rem;
+        color: #FFF;
+        }
+
+        .card .right p {
+        font-size: 1rem;
+        color: #4B4B4B;
+        line-height: 1.6;
+        margin-top: 15px;
+        text-align: justify;
+        }
+
+
+    .card .right ul {
+      display: flex;
+      margin-top: 20px;
+      gap: 20px;
+    }
+
+    .card .right ul li {
+      font-size: 1.2rem;
+      color: #7B7B7B;
+    }
+
+    .card .right .fab {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #1875D0;
+      border-radius: 50%;
+      color: #FFF;
+      text-align: center;
+      padding-top: 15px;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 原始 Header -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="images/icon.png" alt="">
+        <h1 class="sitename">PooPalooza</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero" class="active">主頁</a></li>
+          <li class="dropdown">
+            <a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#map">廁所地圖</a></li>
+              <li><a href="#education">衛教</a></li>
+              <li><a href="#aboutus">關於我們</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="#login">登入</a>
+      <a class="btn-getstarted" href="#register">註冊</a>
+    </div>
+  </header>
+
+  <!-- 模板卡片 -->
+  <!-- 模板卡片 -->
+<div class="card">
+    <div class="thumbnail">
+      <!-- 使用 iframe 嵌入影片並調整樣式以符合圖片排版 -->
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/PBDrCgS7E2k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="right">
+        <h1 style="font-weight: bold;">幫助排便的食物：營養師指南</h1>
+      <div class="author">
+        <img src="https://randomuser.me/api/portraits/men/95.jpg" alt="Author">
+        <h2>Igor MARTY</h2>
+      </div>
+      <p>
+        改善便秘的首要步驟是：<strong>補充水分</strong>。多攝取<strong>纖維食物</strong>（如李子、蘋果、燕麥、豆類）並規律運動，有助於促進腸道蠕動。
+        其他建議：
+        <br>
+        ⚫<strong>喝溫水，促進消化</strong>
+        <br>
+        ⚫<strong>如廁時使用腳凳，模仿蹲姿</strong>
+        <br>
+        ⚫<strong>每天固定時間排便，建立良好的腸道習慣</strong>
+      </p>
+    </div>
+  </div>
+  
+  
+</body>
+
+</html>
