@@ -4,397 +4,384 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - QuickStart Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>衛教</title>
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="images/icon.png" rel="icon">
+  <link href="images/icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
-    @media (max-width: 768px) {
-      .container {
-        grid-template-columns: repeat(2, 1fr); /* 小螢幕顯示兩列 */
-      }
+    #calendar {
+      margin: 0 auto;
+      max-width: 900px;
+      background-color: #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px #c3c3c3;
     }
 
-    @media (max-width: 480px) {
-      .container {
-        grid-template-columns: 1fr; /* 超小螢幕顯示一列 */
-      }
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
     }
-
-    @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
- 
-     * {
-       margin: 0;
-       padding: 0;
-     }
- 
-     body {
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       min-height: 100vh;
-       background: #fff;
-       font-family: "Lato", sans-serif;
-       font-weight: 400;
-       font-style: normal;
-     }
- 
-     section {
-       padding-block: min(20vh, 2rem);
-       width: calc(min(76.5rem, 90%));
-       margin-inline: auto;
-       color: #111;
- 
-       h2 {
-         text-transform: capitalize;
-         letter-spacing: 0.025em;
-         font-size: clamp(2rem, 1.8125rem + 0.75vw, 2.6rem);
-       }
- 
-       a {
-         display: inline-block;
-         text-decoration: none;
-       }
- 
-       .container {
-         width: 200%;
-         max-width: 1000px;
-         margin: 0 auto;
-         margin-top: 5em;
-         display: grid;
-         grid-template-columns: repeat(auto-fit, minmax(50px, 0.5fr)); /* 調整最小寬度為 250px */
-         gap: 1rem;
- 
-         .card {
-           width: 100%;
-           margin: 0;
-           box-sizing: border-box;
-           border-radius: 10px;
-           overflow: hidden;
-           transition: transform 0.3s ease-in-out;
- 
-           &:nth-child(1) .box .icon .iconBox {
-             background: #d3b19a;
-           }
-           &:nth-child(2) .box .icon .iconBox {
-             background: #70b3b1;
-           }
-           &:nth-child(3) .box .icon .iconBox {
-             background: #d05fa2;
-           }
- 
-           .card img {
-             width: 100%;
-             height: auto;
-             object-fit: cover;
-           }
- 
-           ul {
-             margin: 0;
-             padding: 0;
-             list-style-type: none;
-             display: flex;
-             align-items: center;
-             flex-wrap: wrap;
-             gap: 0.625rem;
- 
-             li {
-               text-transform: uppercase;
-               background: var(--clr-tag);
-               color: #282828;
-               font-weight: 700;
-               font-size: 0.8rem;
-               padding: 0.375rem 0.625rem;
-               border-radius: 0.188rem;
-             }
- 
-             .branding {
-               color: darken(#d3b19a, 40%);
-             }
- 
-             .packaging {
-               color: darken(#70b3b1, 40%);
-             }
- 
-             .marketing {
-               color: darken(#d05fa2, 40%);
-             }
-           }
- 
-           .content {
-             padding: 0.938rem 0.625rem;
- 
-             h3 {
-               text-transform: capitalize;
-               font-size: clamp(1.5rem, 1.3909rem + 0.4364vw, 1.8rem);
-             }
- 
-             p {
-               margin: 0.625rem 0 1.25rem;
-               color: #565656;
-             }
-           }
-         }
- 
-         .card-inner {
-           position: relative;
-           width: inherit;
-           height: 15.75rem;
-           background: var(--clr);
-           border-radius: 1.25rem;
-           border-bottom-right-radius: 0;
-           overflow: hidden;
- 
-           .box {
-             width: 100%;
-             height: 100%;
-             background: #fff;
-             border-radius: 1.25rem;
-             overflow: hidden;
- 
-             .imgBox {
-               position: absolute;
-               inset: 0;
- 
-               img {
-                 width: 100%;
-                 height: 100%;
-                 object-fit: cover;
-               }
-             }
- 
-             .icon {
-               position: absolute;
-               bottom: -0.375rem;
-               right: -0.375rem;
-               width: 6rem;
-               height: 6rem;
-               background: var(--clr);
-               border-top-left-radius: 50%;
- 
-               &:hover .iconBox {
-                 transform: scale(1.1);
-               }
- 
-               &::before {
-                 position: absolute;
-                 content: "";
-                 bottom: 0.375rem;
-                 left: -1.25rem;
-                 background: transparent;
-                 width: 1.25rem;
-                 height: 1.25rem;
-                 border-bottom-right-radius: 1.25rem;
-                 box-shadow: 0.313rem 0.313rem 0 0.313rem #fff;
-               }
- 
-               &::after {
-                 position: absolute;
-                 content: "";
-                 top: -1.25rem;
-                 right: 0.375rem;
-                 background: transparent;
-                 width: 1.25rem;
-                 height: 1.25rem;
-                 border-bottom-right-radius: 1.25rem;
-                 box-shadow: 0.313rem 0.313rem 0 0.313rem var(--clr);
-               }
- 
-               .iconBox {
-                 position: absolute;
-                 inset: 0.625rem;
-                 background: #282828;
-                 border-radius: 50%;
-                 display: flex;
-                 justify-content: center;
-                 align-items: center;
-                 transition: 0.3s;
- 
-                 span {
-                   color: #fff;
-                   font-size: 1.5rem;
-                 }
-               }
-             }
-           }
-         }
-       }
-   }
- </style>
- 
-  
-  <!-- =======================================================
-  * Template Name: QuickStart
-  * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  </style>
 </head>
 
-<body class="index-page">
+<body>
 
   <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
+    <div class="container-fluid container-xl d-flex align-items-center">
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <img src="images/icon.png" alt="">
         <h1 class="sitename">PooPalooza</h1>
       </a>
-
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html#hero" class="active">主頁</a></li>
-          <li class="dropdown"><a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown">
+            <a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#map">廁所地圖</a></li>
               <li><a href="#education">衛教</a></li>
               <li><a href="#aboutus">關於我們</a></li>
-              <!--<li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>-->
-                <ul>
-                </ul>
-              </li>
             </ul>
           </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-
       <a class="btn-getstarted" href="#login">登入</a>
       <a class="btn-getstarted" href="#register">註冊</a>
-
     </div>
   </header>
 
-  <main class="main">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-              <section>
-                <div class="container">
-                  <div class="card">
-                    <div class="card-inner" style="--clr:#fff;">
-                      <div class="box">
-                        <div class="imgBox">
-                          <img src="https://cdn.cybassets.com/s/files/27870/ckeditor/pictures/content_03551bc2-2f6d-463f-aee2-2bfc43d8dcfa.jpg" alt="Trust & Co.">
-                        </div>
-                        <div class="icon">
-                          <a href="#" class="iconBox"> <span class="material-symbols-outlined">
-                              arrow_outward
-                            </span></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="content">
-                      <h3>大便顏色科普 </h3>
-                      <p>你知道嗎?其實大便顏色可以反映你的身體狀況</p>
-                      <ul>
-                        <li style="--clr-tag:#d3b19a;" class="branding">大便</li>
-                        <li style="--clr-tag:#70b3b1;" class="packaging">認識</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-inner" style="--clr:#fff;">
-                      <div class="box">
-                        <div class="imgBox">
-                          <img src="https://www.healthyeating.org/images/default-source/home-0.0/nutrition-topics-2.0/general-nutrition-wellness/2-2-2-3foodgroups_fruits_detailfeature_thumb.jpg?sfvrsn=7abe71fe_4" alt="Tonic">
-                        </div>
-                        <div class="icon">
-                          <a href="article.html" class="iconBox"> <span class="material-symbols-outlined">
-                              arrow_outward
-                            </span></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="content">
-                      <h3>食物對大便順暢的影響</h3>
-                      <p>吃對食物大便更順暢</p>
-                      <ul>
-                        <li style="--clr-tag:#d3b19a;" class="branding">大便</li>
-                        <li style="--clr-tag:#d05fa2;" class="marketing">食物</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-inner" style="--clr:#fff;">
-                      <div class="box">
-                        <div class="imgBox">
-                          <img src="https://www.healthyeating.org/images/default-source/home-0.0/nutrition-topics-2.0/general-nutrition-wellness/2-2-2-3foodgroups_fruits_detailfeature_thumb.jpg?sfvrsn=7abe71fe_4" alt="Shower Gel">
-                        </div>
-                        <div class="icon">
-                          <a href="#" class="iconBox"> <span class="material-symbols-outlined">
-                              arrow_outward
-                            </span></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="content">
-                      <h3>shower gel</h3>
-                      <p>Fill out the form and the algorithm will offer the right team of experts</p>
-                      <ul>
-                        <li style="--clr-tag:#d3b19a;" class="branding">branding</li>
-                        <li style="--clr-tag:#70b3b1;" class="packaging">packaging</li>
-                        <li style="--clr-tag:#d05fa2;" class="marketing">marketing</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </section>
-    <section id="hero" class="hero d-flex align-items-center">
-      
-        <div class="container">
-          
-            <div class="login-container">
-              
-            </div>
-          </div>
-    </section>
-</main>
+  <script src="//cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="//cdn.amcharts.com/lib/5/hierarchy.js"></script>
+  <script src="//cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <div id="chartdiv"></div>
+  <dialog id="confirmationDialog">
+    <!-- content -->
+    <button aria-label="Close modal" id="buttonCloseX">✖</button>
+    
+    <h1>Modal message here</h1>
+    <p>Are you sure to confirm this action?</p>
+    
+    <button id="buttonOk">Confirm</button>
+    <button id="buttonClose">Close</button>
+    <script>
+            // buttonOk.js
+      const buttonOk = document.querySelector("#buttonOk");
+      // Confirm button functionality
+      buttonOk?.addEventListener("click", () => {
+        confirmationDialog.close();
+        result.textContent = "Result: <dialog> was confirmed! (click event)";
+      });
 
-    </section><!-- /Hero Section -->
-  
-      <!-- Features Details Section -->
-      <section id="features-details" class="features-details section">
-  
-       
-    </section>
-  
-    </footer>
-  
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
-    <!-- Preloader -->
-    <div id="preloader"></div>
-  
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-  
-  </body>
-  
-  </html>
+    </script>
+    <script>
+      // buttonClose.js
+      const buttonClose = document.querySelector("#buttonClose");
+      // Close button functionality
+      buttonClose?.addEventListener("click", () => {
+        confirmationDialog.close();
+        result.textContent = "Result: <dialog> was closed (click event)";
+      });
+
+    </script>
+    <script>
+      // buttonCloseX.js
+      const buttonCloseX = document.querySelector("#buttonCloseX");
+
+      // X button functionality
+      buttonCloseX?.addEventListener("click", () => {
+        confirmationDialog.close();
+        result.textContent = "Result: <dialog> was closed via X button (click event)";
+      });
+
+    </script>
+  </dialog>
+
+
+  <div id="result">Result: N/A</div>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    #chartdiv {
+      width: 100%;
+      height: 850px;
+    }
+  </style>
+  <script>
+        // elements IDs attribution
+        const openButton = document.querySelector("#openButton");
+        const confirmationDialog = document.querySelector("#confirmationDialog");
+        
+        const result = document.querySelector("#result");
+
+        // open dialog (triggered by clicking openButton)
+        openButton.addEventListener("click", () => {
+          openDialog();
+        });
+
+        function openDialog() {
+          if (typeof confirmationDialog.showModal === "function") {
+            confirmationDialog.showModal();
+          } else {
+            alert("The dialog HTML5 API is not supported by this browser. Please, update.");
+          }
+        }
+
+        function handleClose() {
+          confirmationDialog.close();
+          result.textContent = "Result: <dialog> was closed (click event)";
+        }
+        // esc key
+        confirmationDialog.addEventListener("cancel", (event) => {
+          result.textContent = "Result: <dialog> was canceled by ESC key press (cancel event)";
+        });
+  </script>
+  <script>
+    var data = [{
+    //name: "大便POOP",
+    value: 60,
+    image: "images/education-poop.png",
+    children: [
+      {
+        name: "飲食",
+        value: 30,
+        image: "images/education-food.png",
+        children: [
+          {
+            name: "API Management",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "IoT",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "O2O Integration",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Project Management",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Test-fit Management",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          }
+        ]
+      },{
+        name: "大便知識",
+        value: 30,
+        image: "images/education-poop.png",
+        children: [
+        {
+          name: "顏色&形狀",
+          value: 20,
+          image: "https://img.icons8.com/flat-round/344/pinguin--v1.png",
+          onClick: function() {
+            openDialog(); // 開啟對話框
+          }
+        },
+          {
+            name: "IoT",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "O2O Integration",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Project Management",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Test-fit Management",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          }
+        ]
+      },
+
+      {
+        name: "運動",
+        value: 30,
+        image: "images/education-exercise.png",
+        children: [
+          {
+            name: "PWA",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Ream-time Tracking",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Mobile App",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          }
+        ]
+      },
+      {
+        name: "情緒",
+        value: 30,
+        image: "images/education-emotion.png",
+        children: [
+          {
+            name: "Payments",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "E-Signature",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Digital Wallet",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Blockchain",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          }
+        ]
+      },
+      {
+        name: "疾病",
+        value: 30,
+        image: "images/education-disease.png",
+        children: [
+          {
+            name: "Workflow",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Budget Management",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "RPA",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "CRM",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "DMS",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          },
+          {
+            name: "Scheduling",
+            value: 20,
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+          }
+        ]
+      }
+    ]
+  }];
+
+  // Create root and chart
+  var root = am5.Root.new("chartdiv");
+
+  root.setThemes([
+    am5themes_Animated.new(root)
+  ]);
+
+  var container = root.container.children.push(
+    am5.Container.new(root, {
+      width: am5.percent(100),
+      height: am5.percent(100),
+      layout: root.verticalLayout
+    })
+  );
+
+  var series = container.children.push(
+    am5hierarchy.ForceDirected.new(root, {
+      downDepth: 1,
+      initialDepth: 1,
+      valueField: "value",
+      categoryField: "name",
+      childDataField: "children",
+      minRadius: 20,
+      maxRadius: 60,
+      centerStrength: 0.5,
+      manyBodyStrength: -1,
+      nodePadding: 40
+    })
+  );
+
+  // Set up labels
+  series.labels.template.setAll({
+    fill: am5.color(0x000000),
+    y: 45,
+    // y: am5.percent(10),
+    oversizedBehavior: "none"
+  });
+// 節點樣式設置
+series.nodes.template.setup = function(target) {
+  target.events.on("dataitemchanged", function(ev) {
+    var context = ev.target.dataItem.dataContext;
+
+    // 設置圖片
+    target.children.push(am5.Picture.new(root, {
+      width: 40,
+      height: 40,
+      centerX: am5.percent(50),
+      centerY: am5.percent(50),
+      src: context.image
+    }));
+
+    // 添加點擊事件
+    target.events.on("click", function() {
+      if (context.onClick) {
+        context.onClick(); // 執行自定義點擊事件
+      }
+    });
+  });
+};
+
+// 將資料設置到圖表
+series.data.setAll(data);
+series.set("selectedDataItem", series.dataItems[0]);
+  </script>
+</body>
+
+</html>
