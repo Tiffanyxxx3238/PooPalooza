@@ -97,18 +97,18 @@
   <style>
     .calander {
   position:absolute;
-  top:50px;
+  top:450px;
   left:0;
   right:0;
   bottom:0;
   margin:auto;
-  width:420px;
-  height:385px;
+  width:840px;
+  height:771px;
   background: #cfcfcf;
   font-family: Arial, freesans, sans-serif;
   opacity:1;
   overflow:hidden;
-  box-shadow:0px 0px 4px 1px grey;
+  box-shadow:0px 0px 7px 1px grey;
 }
 
 .calander .top {
@@ -116,7 +116,7 @@
   top:0px;
   left:0px;
   width:auto;
-  height:20px;
+  height:25px;
   z-index:2;
 }
 
@@ -128,8 +128,8 @@
   bottom:0;
   background: #c0ccdc;
   color: white;
-  line-height:20px;
-  font-size:12px;
+  line-height:25px;
+  font-size:25px;
   font-weight:bold;
   text-align:center;
   height:100%;
@@ -139,14 +139,14 @@
   position: absolute;
   top:0;
   bottom:0;
-  width:20px;
+  width:25px;
 }
 
 .calander .top .arrow.left {
   position: absolute;
   top:0;
   bottom:0;
-  width:20px;
+  width:25px;
   left:0px;
   z-index:1;
 }
@@ -158,22 +158,22 @@
 .calander .top .arrow.left:after {
   width: 0; 
 	height: 0; 
-	border-top: 3px solid transparent;
-	border-bottom: 3px solid transparent; 
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent; 
 	
-	border-right:6px solid white; 
+	border-right:8px solid white; 
   z-index:2;
   position: absolute;
   content: '';
-  top:7px;
-  left:7px;
+  top:8px;
+  left:8px;
 }
 
 .calander .top .arrow.right {
   position: absolute;
   top:0;
   bottom:0;
-  width:20px;
+  width:25px;
   right:0px;
   z-index:1;
 }
@@ -185,15 +185,15 @@
 .calander .top .arrow.right:after {
   width: 0; 
 	height: 0; 
-	border-top: 3px solid transparent;
-	border-bottom: 3px solid transparent;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
 	
-	border-left: 6px solid white;
+	border-left: 8px solid white;
   z-index:2;
   position: absolute;
   content: '';
-  top:7px;
-  left:7px;
+  top:8px;
+  left:8px;
 }
 
 .calander .day-bar {
@@ -227,14 +227,13 @@
 .calander .day-bar td {
   position:relative;
   border:1px solid #D6D2D4;
-  width:50px;
+  width:100px;
   border-spacing:0;
   text-align:center;
   padding:0;
   margin:0;
   /*display:inline-block;*/
   border-bottom:none;
-  font-size: 10px;  /* 縮小字體 */
 }
 
 .calander .container .month .week {
@@ -248,10 +247,10 @@
 
 .calander .container .month .week .day {
   position:relative;
-  height:60px;
+  height:120px;
   padding:0;
   margin:0px;
-  width:60px;
+  width:120px;
   top:0px;
   left:0px;
   border:1px solid #D6D2D4;
@@ -266,7 +265,7 @@
   text-align:left;
   font-weight:normal;
   white-space:pre;
-  padding-bottom:3px;
+  padding-bottom:5px;
 }
 
 .calander .container .month .week .day .info .title {
@@ -427,7 +426,7 @@
 }
   </style>
   <script>
-var allText = '{"events":{"2013-11-26": {"events":[{"name":"Recruit", "time":"8pm - 9pm", "info":"<a href=\'http://fau.ed/cdc\' target=\'_blank\'>Come visit</a>"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]},"2013-11-29": {"events":[{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]}}}';
+var allText = '{"events":{"2024-11-26": {"events":[{"name":"Recruit", "time":"8pm - 9pm", "info":"<a href=\'http://fau.ed/cdc\' target=\'_blank\'>Come visit</a>"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]},"2013-11-29": {"events":[{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]}}}';
  	var allTextLines = allText.split(/\r\n|\n/);
     var entries = allTextLines[0].split(',');
     window.test1 = allTextLines;
