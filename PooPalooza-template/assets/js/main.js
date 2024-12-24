@@ -27,34 +27,7 @@
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
 
-  const images = document.querySelectorAll('.slideshow');
-let currentIndex = 0;
-let imageInterval;
-
-// 當滑鼠移到容器上時，開始顯示圖片
-document.querySelector('.image-container').addEventListener('mouseenter', () => {
-  // 重置圖片顯示
-  currentIndex = 0;
-  images.forEach(image => image.style.display = 'none'); // 隱藏所有圖片
-
-  // 啟動定時器，顯示圖片
-  imageInterval = setInterval(() => {
-    if (currentIndex < images.length) {
-      images[currentIndex].style.display = 'block';  // 顯示當前圖片
-      images[currentIndex].style.opacity = 1;  // 讓圖片過渡顯示
-      currentIndex++;
-    } else {
-      clearInterval(imageInterval);  // 停止顯示圖片
-    }
-  }, 1000); // 每張圖片顯示 1 秒
-});
-
-// 當滑鼠移開容器時，停止顯示圖片
-document.querySelector('.image-container').addEventListener('mouseleave', () => {
-  clearInterval(imageInterval); // 停止定時器
-  images.forEach(image => image.style.display = 'none');  // 隱藏所有圖片
-});
-
+  
   function mobileNavToogle() {
     document.querySelector('body').classList.toggle('mobile-nav-active');
     mobileNavToggleBtn.classList.toggle('bi-list');

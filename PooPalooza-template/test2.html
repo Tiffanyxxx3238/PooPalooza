@@ -112,9 +112,17 @@
             <img src="images/馬桶final.png" alt="Last Frame Image" id="lastFrameImage"
                  style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px; display: none;">
             <!-- 按鈕 -->
-            <button id="actionButton"
-                    style="display: none; margin-top: -300px; margin-left: 400px; position: absolute;">
-              Click Me
+            <button id="actionButton1"
+            style="display: none; margin-top: -130px; margin-left: 350px; position: absolute; 
+            width: 100px; height: 70px; font-size: 18px; font-weight: bold; border-radius: 10px; 
+            background-color: #ffffff; color: rgb(0, 0, 0); border: 2px solid #000000; cursor: pointer;">
+              開始拍照
+            </button>
+            <button id="actionButton2"
+            style="display: none; margin-top: -130px; margin-left: 500px; position: absolute; 
+            width: 100px; height: 70px; font-size: 18px; font-weight: bold; border-radius: 10px; 
+            background-color: #ffffff; color: rgb(0, 0, 0); border: 2px solid #000000; cursor: pointer;">
+              上傳照片
             </button>
           </div>
           
@@ -140,11 +148,12 @@
               const staticImage = document.getElementById("staticImage");
               const animatedGif = document.getElementById("animatedGif");
               const lastFrameImage = document.getElementById("lastFrameImage");
-              const actionButton = document.getElementById("actionButton");
+              const actionButton1 = document.getElementById("actionButton1");
+              const actionButton2 = document.getElementById("actionButton2");
               const gifContainer = document.getElementById("gifContainer");
           
               // GIF 播放的時長（根據 GIF 實際播放時間調整）
-              const gifDuration = 5000; // 假設 GIF 播放時間為 5 秒
+              const gifDuration = 425; // 假設 GIF 播放時間為 5 秒
           
               let isMouseInside = false; // 判斷滑鼠是否在容器內
           
@@ -156,14 +165,16 @@
                 staticImage.style.display = "none";
                 animatedGif.style.display = "block";
                 lastFrameImage.style.display = "none";
-                actionButton.style.display = "none";
+                actionButton1.style.display = "none";
+                actionButton2.style.display = "none";
           
                 // 設定計時器，在 GIF 播放結束時切換到最後一幀靜態圖片
                 setTimeout(() => {
                   if (isMouseInside) {
                     animatedGif.style.display = "none"; // 隱藏 GIF
                     lastFrameImage.style.display = "block"; // 顯示最後一幀靜態圖片
-                    actionButton.style.display = "block"; // 顯示按鈕
+                    actionButton1.style.display = "block"; // 顯示按鈕
+                    actionButton2.style.display = "block"; // 顯示按鈕
                   }
                 }, gifDuration);
               });
@@ -176,11 +187,16 @@
                 staticImage.style.display = "block";
                 animatedGif.style.display = "none";
                 lastFrameImage.style.display = "none";
-                actionButton.style.display = "none";
+                actionButton1.style.display = "none";
+                actionButton2.style.display = "none";
               });
           
               // 按鈕點擊事件
-              actionButton.addEventListener("click", () => {
+              actionButton1.addEventListener("click", () => {
+                alert("Button clicked!");
+              });
+
+              actionButton2.addEventListener("click", () => {
                 alert("Button clicked!");
               });
             });
