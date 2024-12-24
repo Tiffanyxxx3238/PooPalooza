@@ -101,40 +101,41 @@
             <a href="#about" class="btn-get-started" style="position: relative; left: -200px;">快速分析</a>
             <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center" style="position: relative; left: -200px;"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
           </div>
-          <div class="gif-container">
-            <img src="images\馬桶static.gif" alt="Static Image" class="static" style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px;">
-            <img src="images/馬桶.gif" alt="Animated GIF" class="animated" style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px;">
-             <!-- 最後靜態圖片 -->
+          <div id="gifContainer" class="gif-container">
+            <!-- 初始靜態圖片 -->
+            <img src="images/馬桶static.gif" alt="Static Image" id="staticImage" class="static" 
+                 style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px;">
+            <!-- 動態 GIF -->
+            <img src="images/馬桶.gif" alt="Animated GIF" id="animatedGif" class="animated" 
+                 style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px; display: none;">
+            <!-- 最後靜態圖片 -->
             <img src="images/馬桶final.png" alt="Last Frame Image" id="lastFrameImage"
-            style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px; display: none;">
+                 style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px; display: none;">
             <!-- 按鈕 -->
             <button id="actionButton"
-               style="display: none; margin-top: -300px; margin-left: 400px; position: absolute;">
-            Click Me
-            </button>
-            <!-- 按鈕 -->
-            <button id="actionButton" 
-            style="display: none; margin-top: -300px; margin-left: 400px; position: absolute;">
-            Click Me
+                    style="display: none; margin-top: -300px; margin-left: 400px; position: absolute;">
+              Click Me
             </button>
           </div>
+          
           <style>
-              #actionButton {
-                  padding: 10px 20px;
-                  font-size: 16px;
-                  background-color: #4caf50;
-                  color: white;
-                  border: none;
-                  cursor: pointer;
-                  border-radius: 5px;
-                  position: absolute;
-               }
-
-               #actionButton:hover {
-                  background-color: #45a049;
-               }
+            #actionButton {
+              padding: 10px 20px;
+              font-size: 16px;
+              background-color: #4caf50;
+              color: white;
+              border: none;
+              cursor: pointer;
+              border-radius: 5px;
+              position: absolute;
+            }
+          
+            #actionButton:hover {
+              background-color: #45a049;
+            }
           </style>
-         <script>
+          
+          <script>
             document.addEventListener("DOMContentLoaded", () => {
               const staticImage = document.getElementById("staticImage");
               const animatedGif = document.getElementById("animatedGif");
@@ -145,9 +146,9 @@
               // GIF 播放的時長（根據 GIF 實際播放時間調整）
               const gifDuration = 5000; // 假設 GIF 播放時間為 5 秒
           
-              let isMouseInside = false; // 判斷鼠標是否在容器內
+              let isMouseInside = false; // 判斷滑鼠是否在容器內
           
-              // 當鼠標進入容器
+              // 當滑鼠進入容器
               gifContainer.addEventListener("mouseenter", () => {
                 isMouseInside = true;
           
@@ -167,7 +168,7 @@
                 }, gifDuration);
               });
           
-              // 當鼠標離開容器
+              // 當滑鼠離開容器
               gifContainer.addEventListener("mouseleave", () => {
                 isMouseInside = false;
           
@@ -184,6 +185,7 @@
               });
             });
           </script>
+          
         </div>
       </div>
 
