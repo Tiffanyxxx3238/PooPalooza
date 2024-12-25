@@ -34,13 +34,16 @@
         max-width: 800px;
         margin: 20px auto;
         padding: 20px;
+        display: flex; /* 使用 Flexbox */
+        flex-direction: column; /* 垂直排列 */
+        align-items: center; /* 水平居中 */
         text-align: center;
     }
 
     #video {
+        margin: 0;
         width: 100%;
         max-width: 640px;
-        margin-bottom: 20px;
         border: 2px solid #ccc;
         border-radius: 8px;
     }
@@ -50,16 +53,25 @@
     }
 
     #photo {
-        width: 100%;
-        max-width: 640px;
-        margin-top: 20px;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        display: none;
+    visibility: hidden; /* 隱藏但保留空間 */
+    margin: 0;
+    width: 100%;
+    max-width: 640px;
+    height: 360px; /* 確保佔位 */
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5f5f5; /* 增加背景色以示區域 */
+    }
+
+    #photo.visible {
+        visibility: visible; /* 顯示時可見 */
     }
 
     .button-container {
-        margin: 20px 0;
+        margin-top: 20px; /* 明確設置間距 */
+        display: flex;
+        justify-content: center;
+        gap: 10px; /* 按鈕之間的間距 */
     }
 
     button {
@@ -67,14 +79,14 @@
         margin: 0 10px;
         font-size: 16px;
         cursor: pointer;
-        background-color: #4CAF50;
+        background-color: #5d7a8a;
         color: white;
         border: none;
         border-radius: 4px;
     }
 
     button:hover {
-        background-color: #45a049;
+        background-color: #5d7a8a;
     }
 
     button:disabled {
@@ -83,21 +95,16 @@
     }
 
     #retake {
-        background-color: #f44336;
+        background-color: #92afd6;
         display: none;
     }
 
     #retake:hover {
-        background-color: #da190b;
+        background-color: #92afd6;
     }
+
     </style>
-  <!-- =======================================================
-  * Template Name: QuickStart
-  * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body class="index-page">
@@ -199,10 +206,10 @@
         
         // 顯示拍攝的照片
         photo.src = canvas.toDataURL('image/png');
-        photo.style.display = 'block';
+        photo.classList.add('visible');;
         
         // 隱藏視訊預覽，顯示相關按鈕
-        video.style.display = 'none';
+        video.style.visibility = 'hidden'; // 使用 visibility 隱藏 video
         captureButton.style.display = 'none';
         retakeButton.style.display = 'inline-block';
         downloadButton.style.display = 'inline-block';
@@ -211,8 +218,8 @@
     // 重新拍攝
     retakeButton.addEventListener('click', () => {
         // 顯示視訊預覽，隱藏照片
-        video.style.display = 'block';
-        photo.style.display = 'none';
+        video.style.visibility = 'visible'; // 使用 visibility 顯示 video
+        photo.classList.remove('visible'); // 移除 visible 隱藏照片
         
         // 重設按鈕狀態
         captureButton.style.display = 'inline-block';
