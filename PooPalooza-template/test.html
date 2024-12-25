@@ -72,48 +72,148 @@
   <script src="//cdn.amcharts.com/lib/5/hierarchy.js"></script>
   <script src="//cdn.amcharts.com/lib/5/themes/Animated.js"></script>
   <div id="chartdiv"></div>
-  <dialog id="confirmationDialog">
+  <dialog id="dialog1">
     <!-- content -->
-    <button aria-label="Close modal" id="buttonCloseX">✖</button>
+    <button style="position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #000;" aria-label="Close modal" class="buttonCloseX">✖</button>
     
     <h1>Modal message here</h1>
     <p>Are you sure to confirm this action?</p>
-    
-    <button id="buttonOk">Confirm</button>
-    <button id="buttonClose">Close</button>
-    <script>
-            // buttonOk.js
-      const buttonOk = document.querySelector("#buttonOk");
-      // Confirm button functionality
-      buttonOk?.addEventListener("click", () => {
-        confirmationDialog.close();
-        result.textContent = "Result: <dialog> was confirmed! (click event)";
-      });
-
-    </script>
-    <script>
-      // buttonClose.js
-      const buttonClose = document.querySelector("#buttonClose");
-      // Close button functionality
-      buttonClose?.addEventListener("click", () => {
-        confirmationDialog.close();
-        result.textContent = "Result: <dialog> was closed (click event)";
-      });
-
-    </script>
-    <script>
-      // buttonCloseX.js
-      const buttonCloseX = document.querySelector("#buttonCloseX");
-
-      // X button functionality
-      buttonCloseX?.addEventListener("click", () => {
-        confirmationDialog.close();
-        result.textContent = "Result: <dialog> was closed via X button (click event)";
-      });
-
-    </script>
+    <div style="text-align: center;">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/PBDrCgS7E2k?si=y0Ttvc_TGMvLlxke" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>    
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+      <button class="buttonOk" style="border: 2px solid black; background-color: white; color: black; height:40px;">Confirm</button>
+      <button class="buttonClose" style="border: 2px solid black; background-color: white; color: black;">Close</button>      
+    </div>
   </dialog>
+  
+  <div id="itemContainer"></div>
+  
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 所有的dialog
+      const dialogs = document.querySelectorAll("dialog");
+  
+      dialogs.forEach(dialog => {
+        // 關閉按鈕（X）
+        const buttonCloseX = dialog.querySelector(".buttonCloseX");
+        if (buttonCloseX) {
+          buttonCloseX.addEventListener("click", () => {
+            dialog.close();
+            document.getElementById("result").textContent = ``;
+          });
+        }
+  
+        // 關閉按鈕（Close）
+        const buttonClose = dialog.querySelector(".buttonClose");
+        if (buttonClose) {
+          buttonClose.addEventListener("click", () => {
+            dialog.close();
+            document.getElementById("result").textContent = ``;
+          });
+        }
+  
+        // 確認按鈕（Confirm）
+        const buttonOk = dialog.querySelector(".buttonOk");
+        if (buttonOk) {
+          buttonOk.addEventListener("click", () => {
+            dialog.close();
+            document.getElementById("result").textContent = ``;
+          });
+        }
+      });
+  
+      // 開啟對話框的通用功能
+      function openDialog(dialogId) {
+        const dialog = document.getElementById(dialogId);
+        if (dialog) {
+          if (typeof dialog.showModal === "function") {
+            dialog.showModal();
+          } else {
+            alert("The dialog HTML5 API is not supported by this browser.");
+          }
+        } else {
+          console.error(`Dialog with ID "${dialogId}" not found.`);
+        }
+      }
+  
+  
+      // 渲染按鈕
+      const container = document.getElementById("itemContainer");
+      items.forEach((item) => {
+        const button = document.createElement("button");
+        button.textContent = item.name;
+        button.addEventListener("click", () => openDialog(item.dialogId));
+        container.appendChild(button);
+      });
+    });
+  </script>
+  
+  </dialog>
+<script>
+  // 通用的 openDialog 函數
+function openDialog(dialogId) {
+  const dialog = document.getElementById(dialogId);
+  if (dialog) {
+    if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    } else {
+      alert("Dialog API is not supported by this browser.");
+    }
+  } else {
+    console.error(`Dialog with ID "${dialogId}" not found.`);
+  }
+}
 
+// 通用的 closeDialog 函數（如果需要）
+function closeDialog(dialogId) {
+  const dialog = document.getElementById(dialogId);
+  if (dialog) {
+    dialog.close();
+  }
+}
+
+// 動態渲染 UI 並綁定事件
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("itemContainer"); // 假設有一個容器
+
+  items.forEach((item) => {
+    // 創建 DOM 元素
+    const itemElement = document.createElement("div");
+    itemElement.classList.add("item");
+    itemElement.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+      <span>${item.name} (Value: ${item.value})</span>
+      <button class="openDialogButton">Learn More</button>
+    `;
+
+    // 綁定按鈕的點擊事件
+    const button = itemElement.querySelector(".openDialogButton");
+    button.addEventListener("click", item.onClick);
+
+    container.appendChild(itemElement);
+  });
+
+  // 綁定所有對話框的關閉按鈕
+  const closeButtons = document.querySelectorAll(".buttonClose");
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const dialog = button.closest("dialog");
+      if (dialog) {
+        dialog.close();
+      }
+    });
+  });
+});
+</script>
 
   <div id="result">Result: N/A</div>
 
@@ -128,35 +228,6 @@
     }
   </style>
   <script>
-        // elements IDs attribution
-        const openButton = document.querySelector("#openButton");
-        const confirmationDialog = document.querySelector("#confirmationDialog");
-        
-        const result = document.querySelector("#result");
-
-        // open dialog (triggered by clicking openButton)
-        openButton.addEventListener("click", () => {
-          openDialog();
-        });
-
-        function openDialog() {
-          if (typeof confirmationDialog.showModal === "function") {
-            confirmationDialog.showModal();
-          } else {
-            alert("The dialog HTML5 API is not supported by this browser. Please, update.");
-          }
-        }
-
-        function handleClose() {
-          confirmationDialog.close();
-          result.textContent = "Result: <dialog> was closed (click event)";
-        }
-        // esc key
-        confirmationDialog.addEventListener("cancel", (event) => {
-          result.textContent = "Result: <dialog> was canceled by ESC key press (cancel event)";
-        });
-  </script>
-  <script>
     var data = [{
     //name: "大便POOP",
     value: 60,
@@ -168,9 +239,12 @@
         image: "images/education-food.png",
         children: [
           {
-            name: "API Management",
+            name: "幫助排便食物",
             value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
+            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png",
+            onClick: function() {
+            openDialog("dialog1"); // 開啟對話框
+          }
           },
           {
             name: "IoT",
