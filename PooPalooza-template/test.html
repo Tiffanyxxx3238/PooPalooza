@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>衛教</title>
+  <title>日歷</title>
 
   <!-- Favicons -->
   <link href="images/icon.png" rel="icon">
@@ -68,394 +68,698 @@
     </div>
   </header>
 
-  <script src="//cdn.amcharts.com/lib/5/index.js"></script>
-  <script src="//cdn.amcharts.com/lib/5/hierarchy.js"></script>
-  <script src="//cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-  <div id="chartdiv"></div>
-  <dialog id="dialog1">
-    <!-- content -->
-    <button style="position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #000;" aria-label="Close modal" class="buttonCloseX">✖</button>
-    
-    <h1>Modal message here</h1>
-    <p>Are you sure to confirm this action?</p>
-    <div style="text-align: center;">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/PBDrCgS7E2k?si=y0Ttvc_TGMvLlxke" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>    
-    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-      <button class="buttonOk" style="border: 2px solid black; background-color: white; color: black; height:40px;">Confirm</button>
-      <button class="buttonClose" style="border: 2px solid black; background-color: white; color: black;">Close</button>      
+  <div class="calander">
+    <div class="top">
+      <div class="arrow left" onclick="turnLeft();">
+      </div>
+      <div class="font">
+        
+      </div>
+      <div class="arrow right" onclick="turnRight();">
+      </div>
     </div>
-  </dialog>
-  
-  <div id="itemContainer"></div>
-  
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 所有的dialog
-      const dialogs = document.querySelectorAll("dialog");
-  
-      dialogs.forEach(dialog => {
-        // 關閉按鈕（X）
-        const buttonCloseX = dialog.querySelector(".buttonCloseX");
-        if (buttonCloseX) {
-          buttonCloseX.addEventListener("click", () => {
-            dialog.close();
-            document.getElementById("result").textContent = ``;
-          });
-        }
-  
-        // 關閉按鈕（Close）
-        const buttonClose = dialog.querySelector(".buttonClose");
-        if (buttonClose) {
-          buttonClose.addEventListener("click", () => {
-            dialog.close();
-            document.getElementById("result").textContent = ``;
-          });
-        }
-  
-        // 確認按鈕（Confirm）
-        const buttonOk = dialog.querySelector(".buttonOk");
-        if (buttonOk) {
-          buttonOk.addEventListener("click", () => {
-            dialog.close();
-            document.getElementById("result").textContent = ``;
-          });
-        }
-      });
-  
-      // 開啟對話框的通用功能
-      function openDialog(dialogId) {
-        const dialog = document.getElementById(dialogId);
-        if (dialog) {
-          if (typeof dialog.showModal === "function") {
-            dialog.showModal();
-          } else {
-            alert("The dialog HTML5 API is not supported by this browser.");
-          }
-        } else {
-          console.error(`Dialog with ID "${dialogId}" not found.`);
-        }
-      }
-  
-  
-      // 渲染按鈕
-      const container = document.getElementById("itemContainer");
-      items.forEach((item) => {
-        const button = document.createElement("button");
-        button.textContent = item.name;
-        button.addEventListener("click", () => openDialog(item.dialogId));
-        container.appendChild(button);
-      });
-    });
-  </script>
-  
-  </dialog>
-<script>
-  // 通用的 openDialog 函數
-function openDialog(dialogId) {
-  const dialog = document.getElementById(dialogId);
-  if (dialog) {
-    if (typeof dialog.showModal === "function") {
-      dialog.showModal();
-    } else {
-      alert("Dialog API is not supported by this browser.");
-    }
-  } else {
-    console.error(`Dialog with ID "${dialogId}" not found.`);
-  }
-}
-
-// 通用的 closeDialog 函數（如果需要）
-function closeDialog(dialogId) {
-  const dialog = document.getElementById(dialogId);
-  if (dialog) {
-    dialog.close();
-  }
-}
-
-// 動態渲染 UI 並綁定事件
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("itemContainer"); // 假設有一個容器
-
-  items.forEach((item) => {
-    // 創建 DOM 元素
-    const itemElement = document.createElement("div");
-    itemElement.classList.add("item");
-    itemElement.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
-      <span>${item.name} (Value: ${item.value})</span>
-      <button class="openDialogButton">Learn More</button>
-    `;
-
-    // 綁定按鈕的點擊事件
-    const button = itemElement.querySelector(".openDialogButton");
-    button.addEventListener("click", item.onClick);
-
-    container.appendChild(itemElement);
-  });
-
-  // 綁定所有對話框的關閉按鈕
-  const closeButtons = document.querySelectorAll(".buttonClose");
-  closeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const dialog = button.closest("dialog");
-      if (dialog) {
-        dialog.close();
-      }
-    });
-  });
-});
-</script>
-
-  <div id="result">Result: N/A</div>
-
+        <table class="day-bar">
+        <tbody>
+          <tr>
+            <td><b>Sun</b></td>
+            <td><b>Mon</b></td>
+            <td><b>Tue</b></td>
+            <td><b>Wed</b></td>
+            <td><b>Thur</b></td>
+            <td><b>Fri</b></td>
+            <td><b>Sat</b></td>
+          </tr>
+        </tbody>
+      </table>
+    <div class="container">
+    </div>
+  </div>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    }
+    .calander {
+  position:absolute;
+  top:450px;
+  left:0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  width:840px;
+  height:771px;
+  background: #cfcfcf;
+  font-family: Arial, freesans, sans-serif;
+  opacity:1;
+  overflow:hidden;
+  box-shadow:0px 0px 7px 1px grey;
+}
 
-    #chartdiv {
-      width: 100%;
-      height: 850px;
-    }
+.calander .top {
+  position:relative;
+  top:0px;
+  left:0px;
+  width:auto;
+  height:25px;
+  z-index:2;
+}
+
+.calander .top .font {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background: #c0ccdc;
+  color: white;
+  line-height:25px;
+  font-size:25px;
+  font-weight:bold;
+  text-align:center;
+  height:100%;
+}
+
+.calander .top .arrow {
+  position: absolute;
+  top:0;
+  bottom:0;
+  width:25px;
+}
+
+.calander .top .arrow.left {
+  position: absolute;
+  top:0;
+  bottom:0;
+  width:25px;
+  left:0px;
+  z-index:1;
+}
+
+.calander .top .arrow.left:hover {
+  background:#8895a5;
+}
+
+.calander .top .arrow.left:after {
+  width: 0; 
+	height: 0; 
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent; 
+	
+	border-right:8px solid white; 
+  z-index:2;
+  position: absolute;
+  content: '';
+  top:8px;
+  left:8px;
+}
+
+.calander .top .arrow.right {
+  position: absolute;
+  top:0;
+  bottom:0;
+  width:25px;
+  right:0px;
+  z-index:1;
+}
+
+.calander .top .arrow.right:hover {
+  background:#8895a5;
+}
+
+.calander .top .arrow.right:after {
+  width: 0; 
+	height: 0; 
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+	
+	border-left: 8px solid white;
+  z-index:2;
+  position: absolute;
+  content: '';
+  top:8px;
+  left:8px;
+}
+
+.calander .day-bar {
+  width:100%;
+  margin:0;
+  padding:0;
+  border-collapse: collapse;
+  border-spacing:0;
+  background:whitesmoke;
+  z-index:2;
+  position:relative;
+}
+
+.calander .day-bar tbody {
+  width:auto;
+  margin:0;
+  padding:0;
+  border-spacing:0;
+  /*display:inline;*/
+  border-collapse: collapse;
+}
+
+.calander .day-bar tr {
+  position:relative;
+  width:auto;
+  padding:0;
+  margin:0;
+  /*display:inline-block;*/
+}
+
+.calander .day-bar td {
+  position:relative;
+  border:1px solid #D6D2D4;
+  width:100px;
+  border-spacing:0;
+  text-align:center;
+  padding:0;
+  margin:0;
+  /*display:inline-block;*/
+  border-bottom:none;
+}
+
+.calander .container .month .week {
+  position:relative;
+  width:auto;
+  margin:0;
+  padding:0;
+  border-spacing:0;
+  /*height:70px;*/
+}
+
+.calander .container .month .week .day {
+  position:relative;
+  height:120px;
+  padding:0;
+  margin:0px;
+  width:120px;
+  top:0px;
+  left:0px;
+  border:1px solid #D6D2D4;
+  background:white;
+}
+
+.calander .container .month .week .day .info {
+  position:relative;
+  top:0px;
+  width:100%;
+  float:left;
+  text-align:left;
+  font-weight:normal;
+  white-space:pre;
+  padding-bottom:5px;
+}
+
+.calander .container .month .week .day .info .title {
+  position:relative;
+  width:100%;
+  height:12px;
+  font-weight:bold;
+  text-decoration:underline;
+}
+
+.calander .container .month .week .day .info .info {
+  position:relative;
+  width:100%;
+  height:100%;
+  float:left;
+}
+
+.calander .container .month .week .day:hover .Daycont {
+  box-shadow:inset 0px 0px 5px -1px grey;
+  z-index:1;
+  width:100%;
+  height:auto;
+  /*background:#78fa8b;*/
+  background:#FAFAFA;
+}
+
+.calander .container .month .week .Oday.today {
+  position:relative;
+  padding:0;
+  margin:0px;
+  top:0px;
+  left:0px;
+  border:1px solid #D6D2D4;
+  /*background: #B0EBFF;*/
+  background: white;
+  /*background: #F68889;*/
+}
+
+.calander .container .month .week .Oday.today .DayNum {
+	background: #92afd6;
+	color:white;
+}
+
+.calander .container .month .week .Oday.today:after {
+	border: 1px solid #32D7FF;
+	position: absolute;
+	content: '';
+	top: -1px;
+	left: -1px;
+	right: -1px;
+	bottom: -1px;
+}
+
+.calander .container .month .week .Nday {
+  position:relative;
+  padding:0;
+  margin:0px;
+  top:0px;
+  left:0px;
+  border:1px solid #D6D2D4;
+  background:whitesmoke;
+}
+
+.calander .container .month .week .Oday {
+  position:relative;
+  padding:0;
+  margin:0px;
+  top:0px;
+  left:0px;
+  border:1px solid #D6D2D4;
+  background:white;
+}
+
+.calander .container .month .week .Daycont {
+  position:absolute;
+  min-height:120px;
+  padding:0;
+  margin:0px;
+  width:auto;
+  top:0px;
+  left:0px;
+  font-size:13px;
+  line-Height:13px;
+  background:transparent;
+  color:black;
+  font-weight:bold;
+}
+
+.calander .container .month .week .DayNum {
+  position:relative;
+  height:15px;
+  padding:0;
+  margin:0px;
+  width:15px;
+  top:-1px;
+  left:-1px;
+  float:left;
+  font-size:10px;
+  line-Height:15px;
+  background:transparent;
+  text-align:center;
+  border-right:1px solid #D6D2D4;
+  border-bottom: 1px solid #D6D2D4;
+}
+
+.calander .container .month .week .DayName {
+  position:relative;
+  height:15px;
+  padding:0;
+  margin:0px;
+  width:auto;
+  top:0px;
+  left:0px;
+  float:right;
+  font-size:8px;
+  line-Height:15px;
+  background:transparent;
+}
+
+.calander .container .month {
+  position:relative;
+  top:0px;
+  left:0px;
+  padding:0;
+  margin:0;
+  border-spacing:0;
+  width:auto;
+  height:726px;
+  border-collapse:collapse;
+  float:left;
+  
+  display:block;
+}
+.calander .container .month tbody {
+  position:relative;
+  top:0px;
+  left:0px;
+  padding:0;
+  margin:0;
+  border-spacing:0;
+  width:auto;
+  height:100%;
+  border-collapse:collapse;
+  
+}
+
+.calander .container {
+  position:relative;
+  top:0px;
+  left:0px;
+  width:auto;
+  height:auto;
+  padding:0;
+  margin:0;
+  border-spacing:0;
+  /*overflow:hidden;*/
+  -webkit-transition: all .4s ease;
+}
   </style>
   <script>
-    var data = [{
-    //name: "大便POOP",
-    value: 60,
-    image: "images/education-poop.png",
-    children: [
-      {
-        name: "飲食",
-        value: 30,
-        image: "images/education-food.png",
-        children: [
-          {
-            name: "幫助排便食物",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png",
-            onClick: function() {
-            openDialog("dialog1"); // 開啟對話框
-          }
-          },
-          {
-            name: "IoT",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "O2O Integration",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Project Management",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Test-fit Management",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          }
-        ]
-      },{
-        name: "大便知識",
-        value: 30,
-        image: "images/education-poop.png",
-        children: [
-        {
-          name: "顏色&形狀",
-          value: 20,
-          image: "https://img.icons8.com/flat-round/344/pinguin--v1.png",
-          onClick: function() {
-            openDialog(); // 開啟對話框
-          }
+var allText = '{"events":{"2024-11-26": {"events":[{"name":"Recruit", "time":"8pm - 9pm", "info":"<a href=\'http://fau.ed/cdc\' target=\'_blank\'>Come visit</a>"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]},"2013-11-29": {"events":[{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]}}}';
+ 	var allTextLines = allText.split(/\r\n|\n/);
+    var entries = allTextLines[0].split(',');
+    window.test1 = allTextLines;
+    window.test2 = entries;
+    window.test3 = allText;
+    window.test4 = JSON.parse(allText);
+    events = JSON.parse(allText.toString()).events;
+    
+var DateTime = function() {
+    if (arguments.length == 0) {
+        this.date = new Date();
+    }
+    else {
+        try {
+            if (arguments.length == 1 && (typeof arguments[0]  == "string" || typeof arguments[0]  == "number")) {
+                this.date = new Date(arguments[0]);
+            }
+            else if (arguments.length > 1) {
+                switch(arguments.length) {
+                    case 2:
+                        this.date = new Date(arguments[0], arguments[1]);
+                        break;
+                    case 3:
+                        this.date = new Date(arguments[0], arguments[1], arguments[2]);
+                        break;
+                    case 4:
+                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3]);
+                        break;
+                    case 5:
+                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
+                        break;
+                    case 6:
+                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+                        break;
+                    case 7:
+                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
+                        break;
+                    default:
+                        this.date = new Date();
+                        break;
+                };
+            }
+            else {
+                this.date = new Date();
+            };
+        }
+        catch (ex) { 
+            console.log("ERROR: Createing DateTime Object: \r\n", ex);
+            this.date = new Date();
+        };
+    };
+    if (this.date == "Invalid Date") this.date = new Date();
+    
+    this.getDaySuffix = function(a) {
+        var b = "" + a,
+            c = b.length,
+            d = parseInt(b.substring(c-2, c-1)),
+            e = parseInt(b.substring(c-1));
+        if (c == 2 && d == 1) return "th";
+        switch(e) {
+            case 1:
+                return "st";
+                break;
+            case 2:
+                return "nd";
+                break;
+            case 3:
+                return "rd";
+                break;
+            default:
+                return "th";
+                break;
+        };
+    };
+    
+    this.getDoY = function(a) {
+        var b = new Date(a.getFullYear(),0,1);
+        return Math.ceil((a - b) / 86400000);
+    }
+    
+    this.weekdays = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+    this.months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    this.daySuf = new Array( "st", "nd", "rd", "th" );
+   
+    this.day = {
+        index: {
+            week: "0" + this.date.getDay(),
+            month: (this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate()
         },
-          {
-            name: "IoT",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "O2O Integration",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Project Management",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Test-fit Management",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          }
-        ]
-      },
-
-      {
-        name: "運動",
-        value: 30,
-        image: "images/education-exercise.png",
-        children: [
-          {
-            name: "PWA",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Ream-time Tracking",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Mobile App",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          }
-        ]
-      },
-      {
-        name: "情緒",
-        value: 30,
-        image: "images/education-emotion.png",
-        children: [
-          {
-            name: "Payments",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "E-Signature",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Digital Wallet",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Blockchain",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          }
-        ]
-      },
-      {
-        name: "疾病",
-        value: 30,
-        image: "images/education-disease.png",
-        children: [
-          {
-            name: "Workflow",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Budget Management",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "RPA",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "CRM",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "DMS",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          },
-          {
-            name: "Scheduling",
-            value: 20,
-            image: "https://img.icons8.com/flat-round/344/pinguin--v1.png"
-          }
-        ]
-      }
-    ]
-  }];
-
-  // Create root and chart
-  var root = am5.Root.new("chartdiv");
-
-  root.setThemes([
-    am5themes_Animated.new(root)
-  ]);
-
-  var container = root.container.children.push(
-    am5.Container.new(root, {
-      width: am5.percent(100),
-      height: am5.percent(100),
-      layout: root.verticalLayout
-    })
-  );
-
-  var series = container.children.push(
-    am5hierarchy.ForceDirected.new(root, {
-      downDepth: 1,
-      initialDepth: 1,
-      valueField: "value",
-      categoryField: "name",
-      childDataField: "children",
-      minRadius: 20,
-      maxRadius: 60,
-      centerStrength: 0.5,
-      manyBodyStrength: -1,
-      nodePadding: 40
-    })
-  );
-
-  // Set up labels
-  series.labels.template.setAll({
-    fill: am5.color(0x000000),
-    y: 45,
-    // y: am5.percent(10),
-    oversizedBehavior: "none"
-  });
-// 節點樣式設置
-series.nodes.template.setup = function(target) {
-  target.events.on("dataitemchanged", function(ev) {
-    var context = ev.target.dataItem.dataContext;
-
-    // 設置圖片
-    target.children.push(am5.Picture.new(root, {
-      width: 40,
-      height: 40,
-      centerX: am5.percent(50),
-      centerY: am5.percent(50),
-      src: context.image
-    }));
-
-    // 添加點擊事件
-    target.events.on("click", function() {
-      if (context.onClick) {
-        context.onClick(); // 執行自定義點擊事件
-      }
-    });
-  });
+        name: this.weekdays[this.date.getDay()],
+        of: {
+            week: ((this.date.getDay() < 10) ? "0" + this.date.getDay() : this.date.getDay()) + this.getDaySuffix(this.date.getDay()),
+            month: ((this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate()) + this.getDaySuffix(this.date.getDate())
+        }
+    }
+   
+    this.month = {
+        index: (this.date.getMonth() + 1) < 10 ? "0" + (this.date.getMonth() + 1) : this.date.getMonth() + 1,
+        name: this.months[this.date.getMonth()]
+    };
+   
+    this.year = this.date.getFullYear();
+   
+    this.time = {
+        hour: {
+            meridiem: (this.date.getHours() > 12) ? (this.date.getHours() - 12) < 10 ? "0" + (this.date.getHours() - 12) : this.date.getHours() - 12 : (this.date.getHours() < 10) ? "0" + this.date.getHours() : this.date.getHours(),
+            military: (this.date.getHours() < 10) ? "0" + this.date.getHours() : this.date.getHours(),
+            noLeadZero: {
+                meridiem: (this.date.getHours() > 12) ? this.date.getHours() - 12 : this.date.getHours(),
+                military: this.date.getHours()
+            }
+        },
+        minute: (this.date.getMinutes() < 10) ? "0" + this.date.getMinutes() : this.date.getMinutes(),
+        seconds: (this.date.getSeconds() < 10) ? "0" + this.date.getSeconds() : this.date.getSeconds(),
+        milliseconds: (this.date.getMilliseconds() < 100) ? (this.date.getMilliseconds() < 10) ? "00" + this.date.getMilliseconds() : "0" + this.date.getMilliseconds() : this.date.getMilliseconds(),
+        meridiem: (this.date.getHours() > 12) ? "PM" : "AM"
+    };
+    
+    this.sym = {
+        d: {
+            d: this.date.getDate(),
+            dd: (this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate(),
+            ddd: this.weekdays[this.date.getDay()] ? this.weekdays[this.date.getDay()].substring(0, 3) : null,
+            dddd: this.weekdays[this.date.getDay()],
+            ddddd: ((this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate()) + this.getDaySuffix(this.date.getDate()),
+            m: this.date.getMonth() + 1,
+            mm: (this.date.getMonth() + 1) < 10 ? "0" + (this.date.getMonth() + 1) : this.date.getMonth() + 1,
+            mmm: this.months[this.date.getMonth()] ? this.months[this.date.getMonth()].substring(0, 3) : null,
+            mmmm: this.months[this.date.getMonth()],
+            yy: (""+this.date.getFullYear()).substr(2, 2),
+            yyyy: this.date.getFullYear()
+        },
+        t: {
+            h: (this.date.getHours() > 12) ? this.date.getHours() - 12 : this.date.getHours(),
+            hh: (this.date.getHours() > 12) ? (this.date.getHours() - 12) < 10 ? "0" + (this.date.getHours() - 12) : this.date.getHours() - 12 : (this.date.getHours() < 10) ? "0" + this.date.getHours() : this.date.getHours(),
+            hhh: this.date.getHours(),
+            m: this.date.getMinutes(),
+            mm: (this.date.getMinutes() < 10) ? "0" + this.date.getMinutes() : this.date.getMinutes(),
+            s: this.date.getSeconds(),
+            ss: (this.date.getSeconds() < 10) ? "0" + this.date.getSeconds() : this.date.getSeconds(),
+            ms: this.date.getMilliseconds(),
+            mss: Math.round(this.date.getMilliseconds()/10) < 10 ? "0" + Math.round(this.date.getMilliseconds()/10) : Math.round(this.date.getMilliseconds()/10),
+            msss: (this.date.getMilliseconds() < 100) ? (this.date.getMilliseconds() < 10) ? "00" + this.date.getMilliseconds() : "0" + this.date.getMilliseconds() : this.date.getMilliseconds()
+        }
+    };
+   
+    this.formats = {
+        compound: {
+            commonLogFormat: this.sym.d.dd + "/" + this.sym.d.mmm + "/" + this.sym.d.yyyy + ":" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            exif: this.sym.d.yyyy + ":" + this.sym.d.mm + ":" + this.sym.d.dd + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            /*iso1: "",
+            iso2: "",*/
+            mySQL: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            postgreSQL1: this.sym.d.yyyy + "." + this.getDoY(this.date),
+            postgreSQL2: this.sym.d.yyyy + "" + this.getDoY(this.date),
+            soap: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss + "." + this.sym.t.mss,
+            //unix: "",
+            xmlrpc: this.sym.d.yyyy + "" + this.sym.d.mm + "" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            xmlrpcCompact: this.sym.d.yyyy + "" + this.sym.d.mm + "" + this.sym.d.dd + "T" + this.sym.t.hhh + "" + this.sym.t.mm + "" + this.sym.t.ss,
+            wddx: this.sym.d.yyyy + "-" + this.sym.d.m + "-" + this.sym.d.d + "T" + this.sym.t.h + ":" + this.sym.t.m + ":" + this.sym.t.s
+    },
+        constants: {
+            atom: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            cookie: this.sym.d.dddd + ", " + this.sym.d.dd + "-" + this.sym.d.mmm + "-" + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            iso8601: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rfc822: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rfc850: this.sym.d.dddd + ", " + this.sym.d.dd + "-" + this.sym.d.mmm + "-" + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rfc1036: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rfc1123: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yyyy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rfc2822: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yyyy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rfc3339: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            rss: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
+            w3c: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss
+    },
+        pretty: {
+            a: this.sym.t.h + ":" + this.sym.t.mm + "." + this.sym.t.ss + this.time.meridiem + " " + this.sym.d.dddd + " " + this.sym.d.ddddd + " of " + this.sym.d.mmmm + ", " + this.sym.d.yyyy,
+            b: this.sym.t.h + ":" + this.sym.t.mm + this.time.meridiem +  " " + this.sym.d.dddd + " " + this.sym.d.ddddd + " of " + this.sym.d.mmmm + ", " + this.sym.d.yyyy
+        }
+    };
+   
 };
 
-// 將資料設置到圖表
-series.data.setAll(data);
-series.set("selectedDataItem", series.dataItems[0]);
+
+var getTime = function(node)
+{
+  var dt = new DateTime();
+var newToday = dt.day.name.substr(0,3) + " " + dt.day.of.month + " " + dt.month.name.substr(0,3) + ", " + dt.time.hour.noLeadZero.meridiem + ":" + dt.time.minute + " " + dt.time.meridiem;
+ node.innerHTML = newToday;
+};
+
+var CurrentM = new Date().getMonth();
+var daysN = ['Sunday', 'Monday', 'Tuesday', 'Wendsday', 'Thursday', 'Friday', 'Saturday'];
+var monthsN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function daysInMonth(iMonth, iYear)
+{
+return 32 - new Date(iYear, iMonth, 32).getDate();
+};
+var getFD = function(cmonth)
+{
+  var Date_Object = new Date();
+Date_Object.setMonth(cmonth);
+var first_DOW = Date_Object.getDay();
+  return first_DOW;
+};
+var getFD2 = function(cmonth)
+{
+  var temp = getFD(cmonth);
+  var Date_Object = new Date();
+Date_Object.setMonth(cmonth);
+  Date_Object.setDate(daysInMonth(cmonth, Date_Object.getFullYear()));
+var first_DOW = Date_Object.getDay();
+  //return first_DOW;
+  return (daysInMonth(cmonth, Date_Object.getFullYear())+temp+1);
+};
+var calander = document.body.querySelector('.calander');
+calander.container = calander.querySelector('.container');
+var week = function()
+{
+  var temp = document.createElement('tr');
+  temp.className = 'week';
+  return temp;
+};
+var day = function(cmonth, tday, type)
+{
+  var info = function() {
+    this.info = document.createElement('div');
+    this.info.className = 'info';
+    this.header = document.createElement('div');
+    this.header.className = 'title';
+    this.text = document.createElement('div');
+    this.text.className = '2info';
+    return this;
+  };
+  var cmonth = cmonth;
+  var cday = (((i*7)+(j+1))-tday);
+  var div = document.createElement('div');
+  div.className = 'Daycont';
+  var num = document.createElement('div');
+  var temp = document.createElement('td');
+  temp.name = document.createElement('div');
+  temp.appendChild(div);
+  num.className = 'DayNum';
+  temp.name.className = 'DayName';
+  if(type == true)
+  {
+    temp.className = 'day Nday';
+  } else {
+    var tempday = new Date();
+    if((new Date().getDate()) == (((i*7)+(j+1))-tday) && (new Date().getMonth()) == cmonth)
+    {
+      temp.className = 'day Oday today';
+    } else {
+      temp.className = 'day Oday';
+    }
+    num.innerHTML = cday;
+    div.appendChild(num);
+    div.appendChild(temp.name);
+    //var tempdate = (cmonth+1)+'/'+cday+'/'+'2013';
+	var tempdate = '2013'+'-'+(cmonth+1)+'-'+cday;
+    console.log(tempdate);
+	if(events[tempdate.toString()]) {
+		console.log('after if: '+tempdate);
+		var event = events[tempdate.toString()];
+        for(var a in event.events) {
+          var tempdiv = new info();
+          console.log(tempdiv);
+          tempdiv.header.innerHTML += event.events[a].name;
+          tempdiv.text.innerHTML += event.events[a].time+"\n";
+          tempdiv.text.innerHTML += event.events[a].info;
+          div.appendChild(tempdiv.info);
+          tempdiv.info.appendChild(tempdiv.header);
+          tempdiv.info.appendChild(tempdiv.text);
+        }
+      //}
+    }
+  }
+  
+  return temp;
+};
+var month = function()
+{
+ var temp = document.createElement('table');
+  var temp2 = document.createElement('tbody');
+  temp.appendChild(temp2);
+  temp.className = 'month';
+  return temp;
+};
+for(var q = 0; q < 12; q++)
+{
+  var months = new month();
+  var cmonth = q;
+  calander.querySelector('.container').appendChild(months);
+  for(var i = 0; i < 6; i++)
+  {
+    var weeks = new week();
+    calander.querySelector('.container').children[calander.querySelector('.container').children.length-1].children[0].appendChild(weeks);
+    for(var j = 0; j < 7; j++)
+    {
+      if(((getFD(q)+1) > j && i == 0))
+      {
+       var days = new day(q, 0, true);
+      } else if(((getFD2(q)) < ((i*7)+(j+1)) && i > 3)) {
+       var days = new day(q, 0, true);
+      } else {
+       var days = new day(q, (getFD(q)+1), false);
+      }
+      weeks.appendChild(days);
+    }
+  }
+}
+var turnRight = function()
+{
+  if(CurrentM < 11)
+  {
+    calander.container.style.top = parseInt(calander.container.style.top)-726+'px';
+  CurrentM++;
+  calander.querySelector('.top').children[1].innerHTML = monthsN[CurrentM];
+  }
+}
+
+var turnLeft = function()
+{
+  if(CurrentM > 0)
+  {
+    calander.container.style.top = parseInt(calander.container.style.top)+726+'px';
+  CurrentM--;
+  calander.querySelector('.top').children[1].innerHTML = monthsN[CurrentM];
+  }
+}
+calander.querySelector('.top').children[1].innerHTML = monthsN[new Date().getMonth()];
+calander.container.style.top = -((new Date().getMonth())*726)+'px';
   </script>
+  
 </body>
 
 </html>
