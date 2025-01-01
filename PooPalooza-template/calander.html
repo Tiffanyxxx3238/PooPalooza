@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -23,26 +22,150 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
-    #calendar {
-      margin: 0 auto;
-      max-width: 900px;
-      background-color: #ffffff;
-      border-radius: 6px;
-      box-shadow: 0 1px 2px #c3c3c3;
+
+
+/* 為 header 預留空間的容器 */
+.calendar-wrapper {
+  margin-top: 150px; /* header 高度 + 額外間距 */
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 日曆本體樣式調整 */
+.calendar {
+  width: 1000px;
+  background: #cfcfcf;
+  box-shadow: 0 0 7px 1px grey;
+  margin: 0 auto; /* 水平置中 */
+}
+
+
+    .calendar .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #c0ccdc;
+      color: white;
+      font-weight: bold;
+      padding: 10px;
+      font-size: 18px;
     }
 
-    .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
+    .calendar .arrow {
+      cursor: pointer;
     }
+
+    .calendar .arrow:hover {
+      background: #8895a5;
+    }
+
+    .calendar .arrow.left:after {
+      content: '<';
+      margin-left: 10px;
+    }
+
+    .calendar .arrow.right:after {
+      content: '>';
+      margin-right: 10px;
+    }
+
+    .day-bar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: whitesmoke;
+      padding: 8px 0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #calendar-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #dcdcdc;
+}
+
+#calendar-container div {
+  background: white;
+  aspect-ratio: 1; /* 確保是正方形 */
+  padding: 8px;
+  font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#calendar-container div .date-box {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 15px; /* 稍微加大一點以容納文字 */
+  height: 15px; /* 稍微加大一點以容納文字 */
+  line-height: 15px; /* 設置與高度相同，確保文字垂直置中 */
+  font-size: 8px;
+  border: 1px solid #dcdcdc;
+  border-radius: 3px;
+  background: #ffffff;
+  text-align: center;
+  display: flex; /* 使用 flex 布局 */
+  justify-content: center; /* 水平置中 */
+  align-items: center; /* 垂直置中 */
+  padding: 0; /* 移除可能的內邊距 */
+}
+
+
+#calendar-container div.today .date-box {
+  background: #92afd6;
+  color: white;
+  border-color: #92afd6;
+}
+
+#calendar-container div.event-day .date-box {
+  background: #fdd835;
+  color: black;
+  border-color: #fdd835;
+}
+
+#calendar-container div:hover .date-box {
+  background: #e0e0e0;
+  border-color: #bcbcbc;
+}
+
+#calendar-container div .content img {
+  max-width: 80%;  /* 原本是 100% */
+  height: auto;    /* 保持圖片比例 */
+  display: block;
+  margin: 2px auto 0 auto;
+  object-fit: contain; /* 確保圖片不會被裁切 */
+}
+
+/* 調整 content 區域的樣式以配合較大的圖片 */
+#calendar-container div .content {
+  margin-top: 15px;  /* 稍微減少上方邊距 */
+  font-size: 8px;
+  text-align: center;
+  width: 100%;      /* 確保內容區域占滿整個寬度 */
+  height: calc(100% - 25px); /* 給予更多空間給圖片 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 調整文字與圖片的間距 */
+#calendar-container div .content p {
+  margin: 2px 0;
+  padding: 0;
+}
+
   </style>
 </head>
-
 <body>
-
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center">
       <a href="index.html" class="logo d-flex align-items-center me-auto">
@@ -55,711 +178,189 @@
           <li class="dropdown">
             <a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="#map">廁所地圖</a></li>
-              <li><a href="#education">衛教</a></li>
-              <li><a href="#aboutus">關於我們</a></li>
+              <li><a href="map.html">廁所地圖</a></li>
+              <li><a href="education.html">衛教</a></li>
+              <li><a href="aboutus.html">關於我們</a></li>
             </ul>
           </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="#login">登入</a>
-      <a class="btn-getstarted" href="#register">註冊</a>
+      <a class="btn-getstarted" href="login.html">登入</a>
+      <a class="btn-getstarted" href="register.html">註冊</a>
     </div>
   </header>
-
-  <div class="calander">
-    <div class="top">
-      <div class="arrow left" onclick="turnLeft();">
+  <div class="calendar-wrapper">
+    <div class="calendar">
+      <div class="top">
+        <div class="arrow left" onclick="turnLeft();"></div>
+        <div id="current-month"></div>
+        <div class="arrow right" onclick="turnRight();"></div>
       </div>
-      <div class="font">
-        
+      <div class="day-bar">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
       </div>
-      <div class="arrow right" onclick="turnRight();">
-      </div>
-    </div>
-        <table class="day-bar">
-        <tbody>
-          <tr>
-            <td><b>Sun</b></td>
-            <td><b>Mon</b></td>
-            <td><b>Tue</b></td>
-            <td><b>Wed</b></td>
-            <td><b>Thur</b></td>
-            <td><b>Fri</b></td>
-            <td><b>Sat</b></td>
-          </tr>
-        </tbody>
-      </table>
-    <div class="container">
+      <div id="calendar-container"></div>
     </div>
   </div>
-  <style>
-    .calander {
-  position:absolute;
-  top:450px;
-  left:0;
-  right:0;
-  bottom:0;
-  margin:auto;
-  width:840px;
-  height:771px;
-  background: #cfcfcf;
-  font-family: Arial, freesans, sans-serif;
-  opacity:1;
-  overflow:hidden;
-  box-shadow:0px 0px 7px 1px grey;
-}
-
-.calander .top {
-  position:relative;
-  top:0px;
-  left:0px;
-  width:auto;
-  height:25px;
-  z-index:2;
-}
-
-.calander .top .font {
-  position: absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background: #c0ccdc;
-  color: white;
-  line-height:25px;
-  font-size:25px;
-  font-weight:bold;
-  text-align:center;
-  height:100%;
-}
-
-.calander .top .arrow {
-  position: absolute;
-  top:0;
-  bottom:0;
-  width:25px;
-}
-
-.calander .top .arrow.left {
-  position: absolute;
-  top:0;
-  bottom:0;
-  width:25px;
-  left:0px;
-  z-index:1;
-}
-
-.calander .top .arrow.left:hover {
-  background:#8895a5;
-}
-
-.calander .top .arrow.left:after {
-  width: 0; 
-	height: 0; 
-	border-top: 4px solid transparent;
-	border-bottom: 4px solid transparent; 
-	
-	border-right:8px solid white; 
-  z-index:2;
-  position: absolute;
-  content: '';
-  top:8px;
-  left:8px;
-}
-
-.calander .top .arrow.right {
-  position: absolute;
-  top:0;
-  bottom:0;
-  width:25px;
-  right:0px;
-  z-index:1;
-}
-
-.calander .top .arrow.right:hover {
-  background:#8895a5;
-}
-
-.calander .top .arrow.right:after {
-  width: 0; 
-	height: 0; 
-	border-top: 4px solid transparent;
-	border-bottom: 4px solid transparent;
-	
-	border-left: 8px solid white;
-  z-index:2;
-  position: absolute;
-  content: '';
-  top:8px;
-  left:8px;
-}
-
-.calander .day-bar {
-  width:100%;
-  margin:0;
-  padding:0;
-  border-collapse: collapse;
-  border-spacing:0;
-  background:whitesmoke;
-  z-index:2;
-  position:relative;
-}
-
-.calander .day-bar tbody {
-  width:auto;
-  margin:0;
-  padding:0;
-  border-spacing:0;
-  /*display:inline;*/
-  border-collapse: collapse;
-}
-
-.calander .day-bar tr {
-  position:relative;
-  width:auto;
-  padding:0;
-  margin:0;
-  /*display:inline-block;*/
-}
-
-.calander .day-bar td {
-  position:relative;
-  border:1px solid #D6D2D4;
-  width:100px;
-  border-spacing:0;
-  text-align:center;
-  padding:0;
-  margin:0;
-  /*display:inline-block;*/
-  border-bottom:none;
-}
-
-.calander .container .month .week {
-  position:relative;
-  width:auto;
-  margin:0;
-  padding:0;
-  border-spacing:0;
-  /*height:70px;*/
-}
-
-.calander .container .month .week .day {
-  position:relative;
-  height:120px;
-  padding:0;
-  margin:0px;
-  width:120px;
-  top:0px;
-  left:0px;
-  border:1px solid #D6D2D4;
-  background:white;
-}
-
-.calander .container .month .week .day .info {
-  position:relative;
-  top:0px;
-  width:100%;
-  float:left;
-  text-align:left;
-  font-weight:normal;
-  white-space:pre;
-  padding-bottom:5px;
-}
-
-.calander .container .month .week .day .info .title {
-  position:relative;
-  width:100%;
-  height:12px;
-  font-weight:bold;
-  text-decoration:underline;
-}
-
-.calander .container .month .week .day .info .info {
-  position:relative;
-  width:100%;
-  height:100%;
-  float:left;
-}
-
-.calander .container .month .week .day:hover .Daycont {
-  box-shadow:inset 0px 0px 5px -1px grey;
-  z-index:1;
-  width:100%;
-  height:auto;
-  /*background:#78fa8b;*/
-  background:#FAFAFA;
-}
-
-.calander .container .month .week .Oday.today {
-  position:relative;
-  padding:0;
-  margin:0px;
-  top:0px;
-  left:0px;
-  border:1px solid #D6D2D4;
-  /*background: #B0EBFF;*/
-  background: white;
-  /*background: #F68889;*/
-}
-
-.calander .container .month .week .Oday.today .DayNum {
-	background: #92afd6;
-	color:white;
-}
-
-.calander .container .month .week .Oday.today:after {
-	border: 1px solid #32D7FF;
-	position: absolute;
-	content: '';
-	top: -1px;
-	left: -1px;
-	right: -1px;
-	bottom: -1px;
-}
-
-.calander .container .month .week .Nday {
-  position:relative;
-  padding:0;
-  margin:0px;
-  top:0px;
-  left:0px;
-  border:1px solid #D6D2D4;
-  background:whitesmoke;
-}
-
-.calander .container .month .week .Oday {
-  position:relative;
-  padding:0;
-  margin:0px;
-  top:0px;
-  left:0px;
-  border:1px solid #D6D2D4;
-  background:white;
-}
-
-.calander .container .month .week .Daycont {
-  position:absolute;
-  min-height:120px;
-  padding:0;
-  margin:0px;
-  width:auto;
-  top:0px;
-  left:0px;
-  font-size:13px;
-  line-Height:13px;
-  background:transparent;
-  color:black;
-  font-weight:bold;
-}
-
-.calander .container .month .week .DayNum {
-  position:relative;
-  height:15px;
-  padding:0;
-  margin:0px;
-  width:15px;
-  top:-1px;
-  left:-1px;
-  float:left;
-  font-size:10px;
-  line-Height:15px;
-  background:transparent;
-  text-align:center;
-  border-right:1px solid #D6D2D4;
-  border-bottom: 1px solid #D6D2D4;
-}
-
-.calander .container .month .week .DayName {
-  position:relative;
-  height:15px;
-  padding:0;
-  margin:0px;
-  width:auto;
-  top:0px;
-  left:0px;
-  float:right;
-  font-size:8px;
-  line-Height:15px;
-  background:transparent;
-}
-
-.calander .container .month {
-  position:relative;
-  top:0px;
-  left:0px;
-  padding:0;
-  margin:0;
-  border-spacing:0;
-  width:auto;
-  height:726px;
-  border-collapse:collapse;
-  float:left;
   
-  display:block;
-}
-.calander .container .month tbody {
-  position:relative;
-  top:0px;
-  left:0px;
-  padding:0;
-  margin:0;
-  border-spacing:0;
-  width:auto;
-  height:100%;
-  border-collapse:collapse;
-  
-}
-
-.calander .container {
-  position:relative;
-  top:0px;
-  left:0px;
-  width:auto;
-  height:auto;
-  padding:0;
-  margin:0;
-  border-spacing:0;
-  /*overflow:hidden;*/
-  -webkit-transition: all .4s ease;
-}
-  </style>
   <script>
-var allText = '{"events":{"2024-11-26": {"events":[{"name":"Recruit", "time":"8pm - 9pm", "info":"<a href=\'http://fau.ed/cdc\' target=\'_blank\'>Come visit</a>"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]},"2013-11-29": {"events":[{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"test1", "time":"test2", "info":"test3"},{"name":"", "time":"", "info":""}]}}}';
- 	var allTextLines = allText.split(/\r\n|\n/);
-    var entries = allTextLines[0].split(',');
-    window.test1 = allTextLines;
-    window.test2 = entries;
-    window.test3 = allText;
-    window.test4 = JSON.parse(allText);
-    events = JSON.parse(allText.toString()).events;
-    
-var DateTime = function() {
-    if (arguments.length == 0) {
-        this.date = new Date();
-    }
-    else {
-        try {
-            if (arguments.length == 1 && (typeof arguments[0]  == "string" || typeof arguments[0]  == "number")) {
-                this.date = new Date(arguments[0]);
-            }
-            else if (arguments.length > 1) {
-                switch(arguments.length) {
-                    case 2:
-                        this.date = new Date(arguments[0], arguments[1]);
-                        break;
-                    case 3:
-                        this.date = new Date(arguments[0], arguments[1], arguments[2]);
-                        break;
-                    case 4:
-                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3]);
-                        break;
-                    case 5:
-                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
-                        break;
-                    case 6:
-                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
-                        break;
-                    case 7:
-                        this.date = new Date(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
-                        break;
-                    default:
-                        this.date = new Date();
-                        break;
-                };
-            }
-            else {
-                this.date = new Date();
-            };
-        }
-        catch (ex) { 
-            console.log("ERROR: Createing DateTime Object: \r\n", ex);
-            this.date = new Date();
-        };
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
+
+    const events = {
+      "2025-01-03": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/1.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-04": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/4.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-05": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/5.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-06": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/6.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-07": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/7.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-08": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/8.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-09": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/9.png"// 修改為想要的圖片 URL
+      },
+      "2025-01-15": {
+        events: ["超級順暢~"], // 不同日期的文字內容
+        image: "/images/poop/2.png" // 替換圖片 URL
+      },
+      "2025-01-25": {
+        events: ["有點卡...大的好痛"], 
+        image: "/images/poop/3.png"
+      },
+      "2025-01-26": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/10.png"// 修改為想要的圖片 URL
+      },
+      "2025-02-03": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/11.png"// 修改為想要的圖片 URL
+      },
+      "2025-03-12": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/12.png"// 修改為想要的圖片 URL
+      },
+      "2025-03-13": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/13.png"// 修改為想要的圖片 URL
+      },
+      "2025-03-28": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/14.png"// 修改為想要的圖片 URL
+      },
+      "2025-03-30": {
+        events: ["不太順暢..."], // 修改這裡的文字
+        image: "/images/poop/15.png"// 修改為想要的圖片 URL
+      },
     };
-    if (this.date == "Invalid Date") this.date = new Date();
-    
-    this.getDaySuffix = function(a) {
-        var b = "" + a,
-            c = b.length,
-            d = parseInt(b.substring(c-2, c-1)),
-            e = parseInt(b.substring(c-1));
-        if (c == 2 && d == 1) return "th";
-        switch(e) {
-            case 1:
-                return "st";
-                break;
-            case 2:
-                return "nd";
-                break;
-            case 3:
-                return "rd";
-                break;
-            default:
-                return "th";
-                break;
-        };
-    };
-    
-    this.getDoY = function(a) {
-        var b = new Date(a.getFullYear(),0,1);
-        return Math.ceil((a - b) / 86400000);
-    }
-    
-    this.weekdays = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-    this.months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    this.daySuf = new Array( "st", "nd", "rd", "th" );
-   
-    this.day = {
-        index: {
-            week: "0" + this.date.getDay(),
-            month: (this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate()
-        },
-        name: this.weekdays[this.date.getDay()],
-        of: {
-            week: ((this.date.getDay() < 10) ? "0" + this.date.getDay() : this.date.getDay()) + this.getDaySuffix(this.date.getDay()),
-            month: ((this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate()) + this.getDaySuffix(this.date.getDate())
-        }
-    }
-   
-    this.month = {
-        index: (this.date.getMonth() + 1) < 10 ? "0" + (this.date.getMonth() + 1) : this.date.getMonth() + 1,
-        name: this.months[this.date.getMonth()]
-    };
-   
-    this.year = this.date.getFullYear();
-   
-    this.time = {
-        hour: {
-            meridiem: (this.date.getHours() > 12) ? (this.date.getHours() - 12) < 10 ? "0" + (this.date.getHours() - 12) : this.date.getHours() - 12 : (this.date.getHours() < 10) ? "0" + this.date.getHours() : this.date.getHours(),
-            military: (this.date.getHours() < 10) ? "0" + this.date.getHours() : this.date.getHours(),
-            noLeadZero: {
-                meridiem: (this.date.getHours() > 12) ? this.date.getHours() - 12 : this.date.getHours(),
-                military: this.date.getHours()
-            }
-        },
-        minute: (this.date.getMinutes() < 10) ? "0" + this.date.getMinutes() : this.date.getMinutes(),
-        seconds: (this.date.getSeconds() < 10) ? "0" + this.date.getSeconds() : this.date.getSeconds(),
-        milliseconds: (this.date.getMilliseconds() < 100) ? (this.date.getMilliseconds() < 10) ? "00" + this.date.getMilliseconds() : "0" + this.date.getMilliseconds() : this.date.getMilliseconds(),
-        meridiem: (this.date.getHours() > 12) ? "PM" : "AM"
-    };
-    
-    this.sym = {
-        d: {
-            d: this.date.getDate(),
-            dd: (this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate(),
-            ddd: this.weekdays[this.date.getDay()] ? this.weekdays[this.date.getDay()].substring(0, 3) : null,
-            dddd: this.weekdays[this.date.getDay()],
-            ddddd: ((this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate()) + this.getDaySuffix(this.date.getDate()),
-            m: this.date.getMonth() + 1,
-            mm: (this.date.getMonth() + 1) < 10 ? "0" + (this.date.getMonth() + 1) : this.date.getMonth() + 1,
-            mmm: this.months[this.date.getMonth()] ? this.months[this.date.getMonth()].substring(0, 3) : null,
-            mmmm: this.months[this.date.getMonth()],
-            yy: (""+this.date.getFullYear()).substr(2, 2),
-            yyyy: this.date.getFullYear()
-        },
-        t: {
-            h: (this.date.getHours() > 12) ? this.date.getHours() - 12 : this.date.getHours(),
-            hh: (this.date.getHours() > 12) ? (this.date.getHours() - 12) < 10 ? "0" + (this.date.getHours() - 12) : this.date.getHours() - 12 : (this.date.getHours() < 10) ? "0" + this.date.getHours() : this.date.getHours(),
-            hhh: this.date.getHours(),
-            m: this.date.getMinutes(),
-            mm: (this.date.getMinutes() < 10) ? "0" + this.date.getMinutes() : this.date.getMinutes(),
-            s: this.date.getSeconds(),
-            ss: (this.date.getSeconds() < 10) ? "0" + this.date.getSeconds() : this.date.getSeconds(),
-            ms: this.date.getMilliseconds(),
-            mss: Math.round(this.date.getMilliseconds()/10) < 10 ? "0" + Math.round(this.date.getMilliseconds()/10) : Math.round(this.date.getMilliseconds()/10),
-            msss: (this.date.getMilliseconds() < 100) ? (this.date.getMilliseconds() < 10) ? "00" + this.date.getMilliseconds() : "0" + this.date.getMilliseconds() : this.date.getMilliseconds()
-        }
-    };
-   
-    this.formats = {
-        compound: {
-            commonLogFormat: this.sym.d.dd + "/" + this.sym.d.mmm + "/" + this.sym.d.yyyy + ":" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            exif: this.sym.d.yyyy + ":" + this.sym.d.mm + ":" + this.sym.d.dd + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            /*iso1: "",
-            iso2: "",*/
-            mySQL: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            postgreSQL1: this.sym.d.yyyy + "." + this.getDoY(this.date),
-            postgreSQL2: this.sym.d.yyyy + "" + this.getDoY(this.date),
-            soap: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss + "." + this.sym.t.mss,
-            //unix: "",
-            xmlrpc: this.sym.d.yyyy + "" + this.sym.d.mm + "" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            xmlrpcCompact: this.sym.d.yyyy + "" + this.sym.d.mm + "" + this.sym.d.dd + "T" + this.sym.t.hhh + "" + this.sym.t.mm + "" + this.sym.t.ss,
-            wddx: this.sym.d.yyyy + "-" + this.sym.d.m + "-" + this.sym.d.d + "T" + this.sym.t.h + ":" + this.sym.t.m + ":" + this.sym.t.s
-    },
-        constants: {
-            atom: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            cookie: this.sym.d.dddd + ", " + this.sym.d.dd + "-" + this.sym.d.mmm + "-" + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            iso8601: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rfc822: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rfc850: this.sym.d.dddd + ", " + this.sym.d.dd + "-" + this.sym.d.mmm + "-" + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rfc1036: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rfc1123: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yyyy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rfc2822: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yyyy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rfc3339: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            rss: this.sym.d.ddd + ", " + this.sym.d.dd + " " + this.sym.d.mmm + " " + this.sym.d.yy + " " + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss,
-            w3c: this.sym.d.yyyy + "-" + this.sym.d.mm + "-" + this.sym.d.dd + "T" + this.sym.t.hhh + ":" + this.sym.t.mm + ":" + this.sym.t.ss
-    },
-        pretty: {
-            a: this.sym.t.h + ":" + this.sym.t.mm + "." + this.sym.t.ss + this.time.meridiem + " " + this.sym.d.dddd + " " + this.sym.d.ddddd + " of " + this.sym.d.mmmm + ", " + this.sym.d.yyyy,
-            b: this.sym.t.h + ":" + this.sym.t.mm + this.time.meridiem +  " " + this.sym.d.dddd + " " + this.sym.d.ddddd + " of " + this.sym.d.mmmm + ", " + this.sym.d.yyyy
-        }
-    };
-   
-};
 
 
-var getTime = function(node)
-{
-  var dt = new DateTime();
-var newToday = dt.day.name.substr(0,3) + " " + dt.day.of.month + " " + dt.month.name.substr(0,3) + ", " + dt.time.hour.noLeadZero.meridiem + ":" + dt.time.minute + " " + dt.time.meridiem;
- node.innerHTML = newToday;
-};
+    function renderCalendar(year, month) {
+      const firstDay = new Date(year, month, 1).getDay();
+      const numDays = new Date(year, month + 1, 0).getDate();
+      const container = document.getElementById("calendar-container");
+      const monthName = new Date(year, month).toLocaleString("en-US", { month: "long" });
 
-var CurrentM = new Date().getMonth();
-var daysN = ['Sunday', 'Monday', 'Tuesday', 'Wendsday', 'Thursday', 'Friday', 'Saturday'];
-var monthsN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-function daysInMonth(iMonth, iYear)
-{
-return 32 - new Date(iYear, iMonth, 32).getDate();
-};
-var getFD = function(cmonth)
-{
-  var Date_Object = new Date();
-Date_Object.setMonth(cmonth);
-var first_DOW = Date_Object.getDay();
-  return first_DOW;
-};
-var getFD2 = function(cmonth)
-{
-  var temp = getFD(cmonth);
-  var Date_Object = new Date();
-Date_Object.setMonth(cmonth);
-  Date_Object.setDate(daysInMonth(cmonth, Date_Object.getFullYear()));
-var first_DOW = Date_Object.getDay();
-  //return first_DOW;
-  return (daysInMonth(cmonth, Date_Object.getFullYear())+temp+1);
-};
-var calander = document.body.querySelector('.calander');
-calander.container = calander.querySelector('.container');
-var week = function()
-{
-  var temp = document.createElement('tr');
-  temp.className = 'week';
-  return temp;
-};
-var day = function(cmonth, tday, type)
-{
-  var info = function() {
-    this.info = document.createElement('div');
-    this.info.className = 'info';
-    this.header = document.createElement('div');
-    this.header.className = 'title';
-    this.text = document.createElement('div');
-    this.text.className = '2info';
-    return this;
-  };
-  var cmonth = cmonth;
-  var cday = (((i*7)+(j+1))-tday);
-  var div = document.createElement('div');
-  div.className = 'Daycont';
-  var num = document.createElement('div');
-  var temp = document.createElement('td');
-  temp.name = document.createElement('div');
-  temp.appendChild(div);
-  num.className = 'DayNum';
-  temp.name.className = 'DayName';
-  if(type == true)
-  {
-    temp.className = 'day Nday';
-  } else {
-    var tempday = new Date();
-    if((new Date().getDate()) == (((i*7)+(j+1))-tday) && (new Date().getMonth()) == cmonth)
-    {
-      temp.className = 'day Oday today';
-    } else {
-      temp.className = 'day Oday';
-    }
-    num.innerHTML = cday;
-    div.appendChild(num);
-    div.appendChild(temp.name);
-    //var tempdate = (cmonth+1)+'/'+cday+'/'+'2013';
-	var tempdate = '2013'+'-'+(cmonth+1)+'-'+cday;
-    console.log(tempdate);
-	if(events[tempdate.toString()]) {
-		console.log('after if: '+tempdate);
-		var event = events[tempdate.toString()];
-        for(var a in event.events) {
-          var tempdiv = new info();
-          console.log(tempdiv);
-          tempdiv.header.innerHTML += event.events[a].name;
-          tempdiv.text.innerHTML += event.events[a].time+"\n";
-          tempdiv.text.innerHTML += event.events[a].info;
-          div.appendChild(tempdiv.info);
-          tempdiv.info.appendChild(tempdiv.header);
-          tempdiv.info.appendChild(tempdiv.text);
-        }
-      //}
-    }
-  }
-  
-  return temp;
-};
-var month = function()
-{
- var temp = document.createElement('table');
-  var temp2 = document.createElement('tbody');
-  temp.appendChild(temp2);
-  temp.className = 'month';
-  return temp;
-};
-for(var q = 0; q < 12; q++)
-{
-  var months = new month();
-  var cmonth = q;
-  calander.querySelector('.container').appendChild(months);
-  for(var i = 0; i < 6; i++)
-  {
-    var weeks = new week();
-    calander.querySelector('.container').children[calander.querySelector('.container').children.length-1].children[0].appendChild(weeks);
-    for(var j = 0; j < 7; j++)
-    {
-      if(((getFD(q)+1) > j && i == 0))
-      {
-       var days = new day(q, 0, true);
-      } else if(((getFD2(q)) < ((i*7)+(j+1)) && i > 3)) {
-       var days = new day(q, 0, true);
-      } else {
-       var days = new day(q, (getFD(q)+1), false);
+      document.getElementById("current-month").innerText = `${monthName} ${year}`;
+      container.innerHTML = "";
+
+      const today = new Date();
+      const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+      // Add empty cells for the first row
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement("div");
+        container.appendChild(emptyCell);
       }
-      weeks.appendChild(days);
+
+      // Add the days of the month
+      for (let day = 1; day <= numDays; day++) {
+        const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const cell = document.createElement("div");
+        const dateBox = document.createElement("div");
+        const content = document.createElement("div");
+
+        dateBox.className = "date-box";
+        dateBox.innerText = day;
+        content.className = "content";
+
+        if (events[dateKey]) {
+          if (events[dateKey].events) {
+            const eventText = document.createElement("p");
+            eventText.innerText = events[dateKey].events.join(", ");
+            content.appendChild(eventText);
+          }
+          if (events[dateKey].image) {
+            const img = document.createElement("img");
+            img.src = events[dateKey].image;
+            content.appendChild(img);
+          }
+          cell.classList.add("event-day");
+          cell.title = events[dateKey].events.join(", ");
+        }
+
+        if (isCurrentMonth && day === today.getDate()) {
+          cell.classList.add("today");
+        }
+
+        cell.appendChild(dateBox);
+        cell.appendChild(content);
+        container.appendChild(cell);
+      }
+
+      // Add empty cells for the last row
+      const totalCells = firstDay + numDays;
+      const emptyCellsAtEnd = 7 - (totalCells % 7);
+      if (emptyCellsAtEnd < 7) {
+        for (let j = 0; j < emptyCellsAtEnd; j++) {
+          const emptyCell = document.createElement("div");
+          container.appendChild(emptyCell);
+        }
+      }
     }
-  }
-}
-var turnRight = function()
-{
-  if(CurrentM < 11)
-  {
-    calander.container.style.top = parseInt(calander.container.style.top)-726+'px';
-  CurrentM++;
-  calander.querySelector('.top').children[1].innerHTML = monthsN[CurrentM];
-  }
-}
 
-var turnLeft = function()
-{
-  if(CurrentM > 0)
-  {
-    calander.container.style.top = parseInt(calander.container.style.top)+726+'px';
-  CurrentM--;
-  calander.querySelector('.top').children[1].innerHTML = monthsN[CurrentM];
-  }
-}
-calander.querySelector('.top').children[1].innerHTML = monthsN[new Date().getMonth()];
-calander.container.style.top = -((new Date().getMonth())*726)+'px';
+    function turnLeft() {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      renderCalendar(currentYear, currentMonth);
+    }
+
+    function turnRight() {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar(currentYear, currentMonth);
+    }
+
+    renderCalendar(currentYear, currentMonth);
   </script>
-  
 </body>
-
 </html>
