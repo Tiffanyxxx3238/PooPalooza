@@ -101,11 +101,89 @@
             <a href="#about" class="btn-get-started" style="position: relative; left: -200px;">快速分析</a>
             <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center" style="position: relative; left: -200px;"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
           </div>
-          <div class="gif-container">
-            <img src="images\馬桶static.gif" alt="Static Image" class="static" style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px;">
-            <img src="images/馬桶.gif" alt="Animated GIF" class="animated" style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px;">
-            
+          <div id="gifContainer" class="gif-container">
+            <!-- 初始靜態圖片 -->
+            <img src="images/馬桶static.gif" alt="Static Image" id="staticImage" class="static" 
+                 style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px;">
+            <!-- 動態 GIF -->
+            <img src="images/馬桶.gif" alt="Animated GIF" id="animatedGif" class="animated" 
+                 style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px; display: none;">
+            <!-- 最後靜態圖片 -->
+            <img src="images/馬桶final.png" alt="Last Frame Image" id="lastFrameImage"
+                 style="width: 400px; height: auto; margin-top: -350px; margin-left: 250px; display: none;">
+            <!-- 按鈕 -->
+            <button id="actionButton1"
+            style="display: none; margin-top: -130px; margin-left: 350px; position: absolute; 
+            width: 100px; height: 70px; font-size: 18px; font-weight: bold; border-radius: 10px; 
+            background-color: #ffffff; color: rgb(0, 0, 0); border: 2px solid #000000; cursor: pointer;">
+              開始拍照
+            </button>
+            <button id="actionButton2"
+            style="display: none; margin-top: -130px; margin-left: 500px; position: absolute; 
+            width: 100px; height: 70px; font-size: 18px; font-weight: bold; border-radius: 10px; 
+            background-color: #ffffff; color: rgb(0, 0, 0); border: 2px solid #000000; cursor: pointer;">
+              上傳照片
+            </button>
           </div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const staticImage = document.getElementById("staticImage");
+              const animatedGif = document.getElementById("animatedGif");
+              const lastFrameImage = document.getElementById("lastFrameImage");
+              const actionButton1 = document.getElementById("actionButton1");
+              const actionButton2 = document.getElementById("actionButton2");
+              const gifContainer = document.getElementById("gifContainer");
+          
+              // GIF 播放的時長（根據 GIF 實際播放時間調整）
+              const gifDuration = 425; // 假設 GIF 播放時間為 5 秒
+          
+              let isMouseInside = false; // 判斷滑鼠是否在容器內
+          
+              // 當滑鼠進入容器
+              gifContainer.addEventListener("mouseenter", () => {
+                isMouseInside = true;
+          
+                // 切換到動態 GIF
+                staticImage.style.display = "none";
+                animatedGif.style.display = "block";
+                lastFrameImage.style.display = "none";
+                actionButton1.style.display = "none";
+                actionButton2.style.display = "none";
+          
+                // 設定計時器，在 GIF 播放結束時切換到最後一幀靜態圖片
+                setTimeout(() => {
+                  if (isMouseInside) {
+                    animatedGif.style.display = "none"; // 隱藏 GIF
+                    lastFrameImage.style.display = "block"; // 顯示最後一幀靜態圖片
+                    actionButton1.style.display = "block"; // 顯示按鈕
+                    actionButton2.style.display = "block"; // 顯示按鈕
+                  }
+                }, gifDuration);
+              });
+          
+              // 當滑鼠離開容器
+              gifContainer.addEventListener("mouseleave", () => {
+                isMouseInside = false;
+          
+                // 恢復顯示初始靜態圖片，隱藏其他元素
+                staticImage.style.display = "block";
+                animatedGif.style.display = "none";
+                lastFrameImage.style.display = "none";
+                actionButton1.style.display = "none";
+                actionButton2.style.display = "none";
+              });
+          
+              // 按鈕點擊事件
+              actionButton1.addEventListener("click", () => {
+                window.location.href = "takephoto.html"; // 導向到開始拍照頁面
+              });
+
+              actionButton2.addEventListener("click", () => {
+                window.location.href = "takeupdate_photo.html"; // 導向到上傳照片頁面
+              });
+            });
+          </script>
         </div>
       </div>
 
