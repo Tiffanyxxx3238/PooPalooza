@@ -96,7 +96,7 @@
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center"  style="margin-top: 80px;">
           <h1 data-aos="fade-up" style="position: relative; left: -200px; ">屎命感<span>PooPalooza</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100" style="position: relative; left: -200px;">It's time to give a shit about your health!<br></p>
+          <p id="dynamic-text" data-aos="fade-up" data-aos-delay="100" style="position: relative; left: -200px;">It's time to give a shit about your health!<br>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
             <a href="#about" class="btn-get-started" style="position: relative; left: -200px;">快速分析</a>
             <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center" style="position: relative; left: -200px;"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
@@ -125,6 +125,26 @@
               上傳照片
             </button>
           </div>
+
+          <script>
+            // 定義要輪播的字串
+            const messages = [
+              "It's time to give a shit about your health!",
+              "Track your health with PooPalooza!",
+              "We give a shit, so should you!",
+              "Shit happens, but we’ve got your back!"
+            ];
+          
+            // 選取目標元素
+            const dynamicText = document.getElementById('dynamic-text');
+            let index = 0;
+          
+            // 每5秒更新文字內容
+            setInterval(() => {
+              index = (index + 1) % messages.length; // 獲取下一個索引
+              dynamicText.innerHTML = messages[index] + "<br>"; // 更新內容
+            }, 5000); // 設置5秒
+          </script>
 
           <script>
             document.addEventListener("DOMContentLoaded", () => {
