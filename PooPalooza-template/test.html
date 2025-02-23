@@ -1,215 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f5f5f5;
-    }
+    <title>廁所地圖</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>衛教</title>
 
-    .calendar {
-      width: 700px; /* 縮小到原來的 700px 寬 */
-      background: #cfcfcf;
-      box-shadow: 0 0 7px 1px grey;
-      font-family: Arial, freesans, sans-serif;
-      opacity:1;
-      overflow:hidden;
-      box-shadow:0px 0px 7px 1px grey;
-    }
+    <!-- Favicons -->
+    <link href="images/icon.png" rel="icon">
+    <link href="images/icon.png" rel="apple-touch-icon">
 
-    .calendar .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #c0ccdc;
-      color: white;
-      font-weight: bold;
-      padding: 10px;
-      font-size: 16px; /* 縮小字體 */
-    }
-    .calander .top .font {
-      position: absolute;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      background: #c0ccdc;
-      color: white;
-      line-height:25px;
-      font-size:25px;
-      font-weight:bold;
-      text-align:center;
-      height:100%;
-    }
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-    .calendar .arrow {
-      cursor: pointer;
-    }
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
 
-    .calendar .arrow:hover {
-      background: #9aa4af;
-    }
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
+    <style>
+          #calendar {
+          margin: 0 auto;
+          max-width: 900px;
+          background-color: #ffffff;
+          border-radius: 6px;
+          box-shadow: 0 1px 2px #c3c3c3;
+          }
 
-    .calendar .arrow.left:after {
-      content: '<';
-      margin-left: 10px;
-    }
-
-    .calendar .arrow.right:after {
-      content: '>';
-      margin-right: 10px;
-    }
-
-    .day-bar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      background: whitesmoke;
-      padding: 8px 0; /* 減少垂直空間 */
-      font-weight: bold;
-      text-align: center;
-    }
-
-    #calendar-container {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 1px;
-      background: #dcdcdc;
-    }
-
-    #calendar-container div {
-      background: white;
-      height: 85px; /* 等比例縮小高度 */
-      text-align: left;
-      padding: 4px; /* 縮小內邊距 */
-      font-size: 12px; /* 縮小字體 */
-      position: relative;
-    }
-
-    #calendar-container div span {
-      font-size: 10px;
-      font-weight: bold;
-    }
-
-    #calendar-container div.today {
-      background: #b5bdc9;
-      color: white;
-    }
-
-    #calendar-container div.event-day {
-      background: #fdd835;
-      color: black;
-    }
-
-    #calendar-container div:hover {
-      background: #e0e0e0;
-    }
+          .login-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          padding: 20px;
+          }
   </style>
 </head>
 <body>
-  <div class="calendar">
-    <div class="top">
-      <div class="arrow left" onclick="turnLeft();"></div>
-      <div id="current-month"></div>
-      <div class="arrow right" onclick="turnRight();"></div>
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="images/icon.png" alt="">
+        <h1 class="sitename">PooPalooza</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero" class="active">主頁</a></li>
+          <li class="dropdown">
+            <a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#map">廁所地圖</a></li>
+              <li><a href="#education">衛教</a></li>
+              <li><a href="#aboutus">關於我們</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="#login">登入</a>
+      <a class="btn-getstarted" href="#register">註冊</a>
     </div>
-    <div class="day-bar">
-      <div>Sun</div>
-      <div>Mon</div>
-      <div>Tue</div>
-      <div>Wed</div>
-      <div>Thu</div>
-      <div>Fri</div>
-      <div>Sat</div>
+</header>
+
+    <div class="main-content">
+        <div id="map-container">
+            <div id="map" style="height: 500px; width: 100%;"></div>
+        </div>
     </div>
-    <div id="calendar-container"></div>
-  </div>
-  <script>
-    let currentYear = new Date().getFullYear();
-    let currentMonth = new Date().getMonth();
 
-    const events = {
-     
-      "2025-01-15": { events: ["Sample Event"] }
-    };
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 6,
+            });
+            const infoWindow = new google.maps.InfoWindow();
 
-    function renderCalendar(year, month) {
-      const firstDay = new Date(year, month, 1).getDay();
-      const numDays = new Date(year, month + 1, 0).getDate();
-      const container = document.getElementById("calendar-container");
-      const monthName = new Date(year, month).toLocaleString("en-US", { month: "long" });
+            const locationButton = document.createElement("button");
+            locationButton.textContent = "📍 定位到目前位置";
+            locationButton.classList.add("custom-map-control-button");
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
-      document.getElementById("current-month").innerText = `${monthName} ${year}`;
-      container.innerHTML = "";
+            locationButton.addEventListener("click", () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
 
-      const today = new Date();
-      const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
-
-      // Add empty cells for the first row
-      for (let i = 0; i < firstDay; i++) {
-        const emptyCell = document.createElement("div");
-        container.appendChild(emptyCell);
-      }
-
-      // Add the days of the month
-      for (let day = 1; day <= numDays; day++) {
-        const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-        const cell = document.createElement("div");
-        const span = document.createElement("span");
-
-        span.innerText = day;
-        cell.appendChild(span);
-
-        if (isCurrentMonth && day === today.getDate()) {
-          cell.classList.add("today");
+                            infoWindow.setPosition(pos);
+                            infoWindow.setContent("📍 目前位置");
+                            infoWindow.open(map);
+                            map.setCenter(pos);
+                            map.setZoom(15);
+                        },
+                        (error) => {
+                            console.error("📍 地理定位錯誤:", error.message);
+                            alert("❌ 無法取得您的位置，請稍後再試！");
+                        }
+                    );
+                } else {
+                    alert("❌ 您的瀏覽器不支援地理定位功能！");
+                }
+            });
+             // 地圖創建後，創建廁所標記
+            bathroomLocations.forEach(locationData => {
+                createBathroomMarker(map, locationData);
+            });
         }
 
-        if (events[dateKey]) {
-          cell.classList.add("event-day");
-          cell.title = events[dateKey].events.join(", ");
-        }
+        window.initMap = initMap;
+        
+        // 非同步加載 Google Maps API
+        const script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCeIoWJI9EddO7doHtWuGmKhR7pPp_qqno&libraries=places,marker&callback=initMap";
+        script.async = true;
+        document.head.appendChild(script);
+    </script>
+        <style>
+          /* 主要內容區塊 */
+          .main-content {
+              display: flex; /* 彈性盒模型 */
+              justify-content: center; /* 讓內容水平置中 */
+              align-items: center; /* 讓內容垂直置中 */
+              flex-direction: column; /* 內容垂直排列 */
+              width: 100%; /* 確保區塊填滿父容器 */
+              min-height: 500px; /* 設定內容區域的最小高度 */
+              margin-top: 100px; /* 讓地圖與 header 保持距離 */
+              padding: 20px; /* 避免內容緊貼邊界 */
+          }
+  
+          /* 地圖容器 */
+          #map-container {
+              width: 80%; /* 設定地圖寬度 */
+              max-width: 800px; /* 限制最大寬度 */
+              height: 500px; /* 設定固定高度 */
+              margin: auto; /* 讓地圖水平置中 */
+              border: 1px solid #ddd; /* 增加邊框 */
+              border-radius: 10px; /* 圓角邊框 */
+              box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+              overflow: hidden; /* 防止內容溢出 */
+          }
+  
+          /* 🔹 RWD：小螢幕時讓地圖適應 */
+          @media (max-width: 768px) {
+              .main-content {
+                  margin-top: 120px; /* 手機版增加間距 */
+              }
+              #map-container {
+                  width: 95%; /* 手機版讓地圖更寬 */
+                  height: 400px; /* 避免地圖過高 */
+              }
+          }
+          .bathroom-marker {
+            /* 標記內容的樣式 */
+            background-color: white; /* 示例 */
+            border: 1px solid #ccc; /* 示例 */
+            padding: 2px; /* 示例 */
+            border-radius: 4px; /* 示例 */
+            }
 
-        container.appendChild(cell);
-      }
+      </style>
+      <script>
+            const bathroomLocations = [
+                {
+                    position: { lat: 37.7749, lng: -122.4194 },  // 舊金山
+                    title: "公共廁所 - 聯合廣場",
+                    description: "乾淨且維護良好。",
+                },
+                {
+                    position: { lat: 37.7833, lng: -122.409 },  // 另一個示例
+                    title: "星巴克廁所",
+                    description: "需要購買才能進入。",
+                },
+                // 在此添加更多廁所位置...
+                ];
+                function createBathroomMarker(map, locationData) {
+                    const marker = new google.maps.marker.AdvancedMarkerElement({
+                        map,
+                        position: locationData.position,
+                        title: locationData.title, // 設置標題屬性
+                    });
 
-      // Add empty cells for the last row
-      const totalCells = firstDay + numDays;
-      const emptyCellsAtEnd = 7 - (totalCells % 7);
-      if (emptyCellsAtEnd < 7) {
-        for (let j = 0; j < emptyCellsAtEnd; j++) {
-          const emptyCell = document.createElement("div");
-          container.appendChild(emptyCell);
-        }
-      }
-    }
+                    // 添加自定義圖標
+                    const content = document.createElement("div");
+                    content.classList.add("bathroom-marker"); // 添加類以進行樣式設置
+                    content.innerHTML = `<img src="images/bathroom-icon.png" alt="${locationData.title}" style="width: 24px; height: 24px;">`; // 示例自定義圖標
 
-    function turnLeft() {
-      currentMonth--;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
-      renderCalendar(currentYear, currentMonth);
-    }
+                    marker.content = content;
 
-    function turnRight() {
-      currentMonth++;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-      renderCalendar(currentYear, currentMonth);
-    }
+                    // 添加信息窗口功能
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `<strong>${locationData.title}</strong><br>${locationData.description}`,
+                    });
 
-    renderCalendar(currentYear, currentMonth);
-  </script>
+                    marker.addListener("click", () => {
+                        infoWindow.open(map, marker);
+                    });
+
+                    return marker;
+                }
+                function findNearbyRestrooms(map, location) {
+                    const service = new google.maps.places.PlacesService(map);
+                    const request = {
+                        location: location,
+                        radius: 1000, // 在1000米內搜索
+                        type: 'restroom' // 或 'toilet', 'bathroom'
+                    };
+
+                    service.nearbySearch(request, (results, status) => {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        results.forEach(place => {
+                            // 將場所數據轉換為與 createBathroomMarker 相容的格式
+                            const locationData = {
+                            position: place.geometry.location,
+                            title: place.name,
+                            description: place.vicinity || "無描述可用"
+                            };
+
+                            // 現在可以使用 createBathroomMarker 創建標記
+                            createBathroomMarker(map, locationData);
+                        });
+                        }
+                    });
+                    }
+
+      </script>
 </body>
 </html>
