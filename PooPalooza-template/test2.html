@@ -1,366 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>日歷</title>
-
-  <!-- Favicons -->
-  <link href="images/icon.png" rel="icon">
-  <link href="images/icon.png" rel="apple-touch-icon">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-
-  <style>
-
-
-/* 為 header 預留空間的容器 */
-.calendar-wrapper {
-  margin-top: 150px; /* header 高度 + 額外間距 */
-  padding: 20px;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 日曆本體樣式調整 */
-.calendar {
-  width: 1000px;
-  background: #cfcfcf;
-  box-shadow: 0 0 7px 1px grey;
-  margin: 0 auto; /* 水平置中 */
-}
-
-
-    .calendar .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #c0ccdc;
-      color: white;
-      font-weight: bold;
-      padding: 10px;
-      font-size: 18px;
-    }
-
-    .calendar .arrow {
-      cursor: pointer;
-    }
-
-    .calendar .arrow:hover {
-      background: #8895a5;
-    }
-
-    .calendar .arrow.left:after {
-      content: '<';
-      margin-left: 10px;
-    }
-
-    .calendar .arrow.right:after {
-      content: '>';
-      margin-right: 10px;
-    }
-
-    .day-bar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      background: whitesmoke;
-      padding: 8px 0;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    #calendar-container {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  background: #dcdcdc;
-}
-
-#calendar-container div {
-  background: white;
-  aspect-ratio: 1; /* 確保是正方形 */
-  padding: 8px;
-  font-size: 15px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-#calendar-container div .date-box {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 15px; /* 稍微加大一點以容納文字 */
-  height: 15px; /* 稍微加大一點以容納文字 */
-  line-height: 15px; /* 設置與高度相同，確保文字垂直置中 */
-  font-size: 8px;
-  border: 1px solid #dcdcdc;
-  border-radius: 3px;
-  background: #ffffff;
-  text-align: center;
-  display: flex; /* 使用 flex 布局 */
-  justify-content: center; /* 水平置中 */
-  align-items: center; /* 垂直置中 */
-  padding: 0; /* 移除可能的內邊距 */
-}
-
-
-#calendar-container div.today .date-box {
-  background: #92afd6;
-  color: white;
-  border-color: #92afd6;
-}
-
-#calendar-container div.event-day .date-box {
-  background: #fdd835;
-  color: black;
-  border-color: #fdd835;
-}
-
-#calendar-container div:hover .date-box {
-  background: #e0e0e0;
-  border-color: #bcbcbc;
-}
-
-#calendar-container div .content img {
-  max-width: 80%;  /* 原本是 100% */
-  height: auto;    /* 保持圖片比例 */
-  display: block;
-  margin: 2px auto 0 auto;
-  object-fit: contain; /* 確保圖片不會被裁切 */
-}
-
-/* 調整 content 區域的樣式以配合較大的圖片 */
-#calendar-container div .content {
-  margin-top: 15px;  /* 稍微減少上方邊距 */
-  font-size: 8px;
-  text-align: center;
-  width: 100%;      /* 確保內容區域占滿整個寬度 */
-  height: calc(100% - 25px); /* 給予更多空間給圖片 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* 調整文字與圖片的間距 */
-#calendar-container div .content p {
-  margin: 2px 0;
-  padding: 0;
-}
-
-  </style>
+    <title>廁所地圖</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        .bathroom-marker {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 2px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center">
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="images/icon.png" alt="">
-        <h1 class="sitename">PooPalooza</h1>
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html#hero" class="active">主頁</a></li>
-          <li class="dropdown">
-            <a href="#"><span>功能</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#map">廁所地圖</a></li>
-              <li><a href="#education">衛教</a></li>
-              <li><a href="#aboutus">關於我們</a></li>
-            </ul>
-          </li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <a class="btn-getstarted" href="#login">登入</a>
-      <a class="btn-getstarted" href="#register">註冊</a>
+    <div class="main-content">
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
     </div>
-  </header>
-  <div class="calendar-wrapper">
-    <div class="calendar">
-      <div class="top">
-        <div class="arrow left" onclick="turnLeft();"></div>
-        <div id="current-month"></div>
-        <div class="arrow right" onclick="turnRight();"></div>
-      </div>
-      <div class="day-bar">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-      </div>
-      <div id="calendar-container"></div>
-    </div>
-  </div>
-  
-  <script>
-    let currentYear = new Date().getFullYear();
-    let currentMonth = new Date().getMonth();
 
-    const events = {
-      "2025-01-03": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/1.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-04": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/4.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-05": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/5.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-06": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/6.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-07": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/7.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-08": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/8.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-09": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/9.png"// 修改為想要的圖片 URL
-      },
-      "2025-01-15": {
-        events: ["超級順暢~"], // 不同日期的文字內容
-        image: "/images/poop/2.png" // 替換圖片 URL
-      },
-      "2025-01-25": {
-        events: ["有點卡...大的好痛"], 
-        image: "/images/poop/3.png"
-      },
-      "2025-01-26": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/10.png"// 修改為想要的圖片 URL
-      },
-      "2025-02-03": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/11.png"// 修改為想要的圖片 URL
-      },
-      "2025-03-12": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/12.png"// 修改為想要的圖片 URL
-      },
-      "2025-03-13": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/13.png"// 修改為想要的圖片 URL
-      },
-      "2025-03-28": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/14.png"// 修改為想要的圖片 URL
-      },
-      "2025-03-30": {
-        events: ["不太順暢..."], // 修改這裡的文字
-        image: "/images/poop/15.png"// 修改為想要的圖片 URL
-      },
-    };
+    <script>
+        const bathroomLocations = [
+            {
+                position: { lat: 37.7749, lng: -122.4194 },
+                title: "公共廁所 - 聯合廣場",
+                description: "乾淨且維護良好。",
+            },
+            {
+                position: { lat: 37.7833, lng: -122.409 },
+                title: "星巴克廁所",
+                description: "需要購買才能進入。",
+            }
+        ];
 
+        function createBathroomMarker(map, locationData) {
+            const marker = new google.maps.marker.AdvancedMarkerElement({
+                map,
+                position: locationData.position,
+                title: locationData.title,
+            });
 
-    function renderCalendar(year, month) {
-      const firstDay = new Date(year, month, 1).getDay();
-      const numDays = new Date(year, month + 1, 0).getDate();
-      const container = document.getElementById("calendar-container");
-      const monthName = new Date(year, month).toLocaleString("en-US", { month: "long" });
+            const content = document.createElement("div");
+            content.classList.add("bathroom-marker");
+            content.innerHTML = `<img src="images/bathroom-icon.png" alt="${locationData.title}" style="width:24px;height:24px;">`;
 
-      document.getElementById("current-month").innerText = `${monthName} ${year}`;
-      container.innerHTML = "";
+            marker.content = content;
 
-      const today = new Date();
-      const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<strong>${locationData.title}</strong><br>${locationData.description}`,
+            });
 
-      // Add empty cells for the first row
-      for (let i = 0; i < firstDay; i++) {
-        const emptyCell = document.createElement("div");
-        container.appendChild(emptyCell);
-      }
-
-      // Add the days of the month
-      for (let day = 1; day <= numDays; day++) {
-        const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-        const cell = document.createElement("div");
-        const dateBox = document.createElement("div");
-        const content = document.createElement("div");
-
-        dateBox.className = "date-box";
-        dateBox.innerText = day;
-        content.className = "content";
-
-        if (events[dateKey]) {
-          if (events[dateKey].events) {
-            const eventText = document.createElement("p");
-            eventText.innerText = events[dateKey].events.join(", ");
-            content.appendChild(eventText);
-          }
-          if (events[dateKey].image) {
-            const img = document.createElement("img");
-            img.src = events[dateKey].image;
-            content.appendChild(img);
-          }
-          cell.classList.add("event-day");
-          cell.title = events[dateKey].events.join(", ");
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
         }
 
-        if (isCurrentMonth && day === today.getDate()) {
-          cell.classList.add("today");
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 6,
+            });
+
+            bathroomLocations.forEach(locationData => {
+                createBathroomMarker(map, locationData);
+            });
         }
 
-        cell.appendChild(dateBox);
-        cell.appendChild(content);
-        container.appendChild(cell);
-      }
-
-      // Add empty cells for the last row
-      const totalCells = firstDay + numDays;
-      const emptyCellsAtEnd = 7 - (totalCells % 7);
-      if (emptyCellsAtEnd < 7) {
-        for (let j = 0; j < emptyCellsAtEnd; j++) {
-          const emptyCell = document.createElement("div");
-          container.appendChild(emptyCell);
-        }
-      }
-    }
-
-    function turnLeft() {
-      currentMonth--;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
-      renderCalendar(currentYear, currentMonth);
-    }
-
-    function turnRight() {
-      currentMonth++;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-      renderCalendar(currentYear, currentMonth);
-    }
-
-    renderCalendar(currentYear, currentMonth);
-  </script>
+        // 加載 Google Maps API
+        const script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCeIoWJI9EddO7doHtWuGmKhR7pPp_qqno&libraries=places,marker&callback=initMap";
+        script.async = true;
+        document.head.appendChild(script);
+    </script>
 </body>
 </html>
