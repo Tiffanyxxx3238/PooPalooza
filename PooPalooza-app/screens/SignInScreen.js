@@ -1,4 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as Google from 'expo-auth-session/providers/google';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri } from 'expo-auth-session';
+
+
+WebBrowser.maybeCompleteAuthSession();
+
 import {
   View,
   Text,
@@ -13,28 +21,67 @@ import { AntDesign } from '@expo/vector-icons';
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userInfo, setUserInfo] = useState(null);
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId:     '276493308812-59bflufu86p3o7qteavmo0oeqdem2abq.apps.googleusercontent.com',
+    iosClientId:      '276493308812-et1s5gf5t4mjr2f6flpf447d9qupnlgt.apps.googleusercontent.com',
+    androidClientId:  '276493308812-5n97mc1io9n4a7mflvb3acdbd4iqlv5v.apps.googleusercontent.com',
+    webClientId:      '276493308812-ivh1bmllvmh7c6euqc53lan2bti47ku4.apps.googleusercontent.com',
+    redirectUri: 'https://auth.expo.io/@tiffanyxxx32/PooPalooza-app',
+  });
+
+
+  useEffect(() => {
+    const uri = makeRedirectUri({ useProxy: true });
+    console.log('🔍 實際使用的 redirect URI:', uri);
+
+    // ✅ 把 URI 印在畫面上方便手機除錯
+    setUserInfo({ redirectUri: uri });
+
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      fetch('https://www.googleapis.com/userinfo/v2/me', {
+        headers: { Authorization: `Bearer ${authentication.accessToken}` },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setUserInfo(data);
+          console.log('Google 使用者資料:', data);
+          navigation.navigate('Home');
+        });
+    }
+  }, [response]);
+
 
   return (
+    
     <View style={styles.container}>
+      {userInfo?.redirectUri && (
+        <Text style={{ color: 'red', fontSize: 12, marginBottom: 10 }}>
+          Redirect URI: {userInfo.redirectUri}
+        </Text>
+      )}
+
       {/* 上方標題與返回箭頭 */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Image
+          <Image
             source={require('../assets/icons/back.png')}
             style={styles.backIcon}
             resizeMode="contain"
-        />
+          />
         </TouchableOpacity>
       </View>
 
       <View style={styles.titleRow}>
         <Text style={styles.title}>PooPalooza</Text>
         <Image
-            source={require('../assets/poop-signin.png')}
-            style={styles.imageSmall}
-            resizeMode="contain"
+          source={require('../assets/poop-signin.png')}
+          style={styles.imageSmall}
+          resizeMode="contain"
         />
-        </View>
+      </View>
 
       {/* 輸入欄位 */}
       <TextInput
@@ -58,9 +105,8 @@ export default function SignInScreen({ navigation }) {
         style={styles.signButton}
         onPress={() => navigation.navigate('Home')}
       >
-      <Text style={styles.signText}>Sign</Text>
+        <Text style={styles.signText}>Sign</Text>
       </TouchableOpacity>
-
 
       {/* OR 分隔線 */}
       <View style={styles.orContainer}>
@@ -70,17 +116,41 @@ export default function SignInScreen({ navigation }) {
       </View>
 
       {/* Apple Sign In */}
-      <TouchableOpacity style={styles.oauthButton}>
-        <AntDesign name="apple1" size={20} color="black" />
-        <Text style={styles.oauthText}>USE Apple sign</Text>
-      </TouchableOpacity>
+      {AppleAuthentication.isAvailableAsync && (
+        <AppleAuthentication.AppleAuthenticationButton
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+          buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+          cornerRadius={8}
+          style={{ width: '100%', height: 44, marginBottom: 16 }}
+          onPress={async () => {
+            try {
+              const credential = await AppleAuthentication.signInAsync({
+                requestedScopes: [
+                  AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                  AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                ],
+              });
+              console.log('Apple 登入成功:', credential);
+              navigation.navigate('Home');
+            } catch (e) {
+              if (e.code === 'ERR_CANCELED') console.log('使用者取消 Apple 登入');
+              else console.error(e);
+            }
+          }}
+        />
+      )}
 
       {/* Google Sign In */}
-      <TouchableOpacity style={styles.oauthButton}>
+      <TouchableOpacity
+        style={styles.oauthButton}
+        disabled={!request}
+        onPress={() => promptAsync()}
+      >
         <AntDesign name="google" size={20} color="#EA4335" />
         <Text style={styles.oauthText}>USE Google sign</Text>
       </TouchableOpacity>
     </View>
+    
   );
 }
 
@@ -95,11 +165,6 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     alignItems: 'flex-start',
-    marginBottom: 10,
-  },
-  image: {
-    width: 180,
-    height: 180,
     marginBottom: 10,
   },
   title: {
@@ -180,7 +245,7 @@ const styles = StyleSheet.create({
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end', // ✅ 整排靠右
+    alignSelf: 'flex-end',
     marginBottom: 20,
     gap: 12,
     maxWidth: '100%',
@@ -193,7 +258,5 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 50,
     height: 50,
-},
-
-
+  },
 });
